@@ -11,7 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
-public class StockController {
+public class RentController {
 
     @FXML
     private Button customerLinkButton;
@@ -43,4 +43,5 @@ public class StockController {
         stage.setScene(scene);
         stage.show();
     }
+
 }
