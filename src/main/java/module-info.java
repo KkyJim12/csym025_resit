@@ -1,4 +1,5 @@
 module com.csym025_resit {
+    requires transitive javafx.graphics;
     requires javafx.controls;
     requires javafx.fxml;
 
