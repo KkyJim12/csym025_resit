@@ -66,7 +66,7 @@
       </Label>
       <Button layoutX="648.0" layoutY="36.0" mnemonicParsing="false"
          style="-fx-background-color: #22c55e; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 0, 0, 2, 2);"
-         text="Add Stock" textFill="WHITE">
+         text="Add Stock" textFill="WHITE" onAction="#switchToAddStockScene">
          <font>
             <Font name="Segoe UI" size="18.0" />
          </font>

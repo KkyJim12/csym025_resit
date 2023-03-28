@@ -42,4 +42,12 @@ public class CustomerController {
         stage.setScene(scene);
         stage.show();
     }
+
+    public void switchToAddCustomerScene(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("AddCustomer.fxml"));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
 }
