@@ -7,14 +7,19 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #3b82f6;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+   prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #3b82f6;"
+   xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1"
+   fx:controller="com.csym025_resit.CustomerController">
    <children>
-      <TextField layoutX="308.0" layoutY="104.0" prefHeight="35.0" prefWidth="377.0" promptText="Type something...">
+      <TextField layoutX="308.0" layoutY="104.0" prefHeight="35.0" prefWidth="377.0"
+         promptText="Type something...">
          <font>
             <Font name="Segoe UI" size="18.0" />
          </font>
       </TextField>
-      <Button layoutX="671.0" layoutY="103.0" mnemonicParsing="false" style="-fx-background-color: #10b981;" text="Search" textFill="WHITE">
+      <Button layoutX="671.0" layoutY="103.0" mnemonicParsing="false"
+         style="-fx-background-color: #10b981;" text="Search" textFill="WHITE">
          <font>
             <Font name="Segoe UI" size="18.0" />
          </font>
@@ -24,23 +29,27 @@
             <Font name="Segoe UI Bold" size="24.0" />
          </font>
       </Label>
-      <Button layoutX="648.0" layoutY="36.0" mnemonicParsing="false" style="-fx-background-color: #22c55e;" text="Add Stock" textFill="WHITE">
+      <Button layoutX="648.0" layoutY="36.0" mnemonicParsing="false"
+         style="-fx-background-color: #22c55e;" text="Add Stock" textFill="WHITE">
          <font>
             <Font name="Segoe UI" size="18.0" />
          </font>
       </Button>
       <Accordion layoutX="133.0" layoutY="161.0" />
-      <Button layoutX="38.0" layoutY="86.0" mnemonicParsing="false" style="-fx-background-color: #06b6d4;" text="Stock" textFill="WHITE">
+      <Button layoutX="38.0" layoutY="86.0" mnemonicParsing="false"
+         style="-fx-background-color: #06b6d4;" text="Stock" textFill="WHITE">
          <font>
             <Font name="Segoe UI" size="18.0" />
          </font>
       </Button>
-      <Button layoutX="38.0" layoutY="144.0" mnemonicParsing="false" style="-fx-background-color: #06b6d4;" text="Customer" textFill="WHITE">
+      <Button layoutX="38.0" layoutY="144.0" mnemonicParsing="false"
+         style="-fx-background-color: #06b6d4;" text="Customer" textFill="WHITE">
          <font>
             <Font name="Segoe UI" size="18.0" />
          </font>
       </Button>
-      <Button layoutX="38.0" layoutY="200.0" mnemonicParsing="false" style="-fx-background-color: #06b6d4;" text="Rent" textFill="WHITE">
+      <Button layoutX="38.0" layoutY="200.0" mnemonicParsing="false"
+         style="-fx-background-color: #06b6d4;" text="Rent" textFill="WHITE">
          <font>
             <Font name="Segoe UI" size="18.0" />
          </font>
@@ -50,14 +59,17 @@
             <Font name="Segoe UI Bold" size="30.0" />
          </font>
       </Label>
-      <Pane layoutX="308.0" layoutY="179.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #ef4444;">
+      <Pane layoutX="308.0" layoutY="179.0" prefHeight="200.0" prefWidth="200.0"
+         style="-fx-background-color: #ef4444;">
          <children>
-            <Button layoutX="102.0" layoutY="151.0" mnemonicParsing="false" style="-fx-background-color: #f97316;" text="Delete" textFill="WHITE">
+            <Button layoutX="102.0" layoutY="151.0" mnemonicParsing="false"
+               style="-fx-background-color: #f97316;" text="Delete" textFill="WHITE">
                <font>
                   <Font name="Segoe UI" size="18.0" />
                </font>
             </Button>
-            <Button layoutX="19.0" layoutY="151.0" mnemonicParsing="false" style="-fx-background-color: #eab308;" text="Edit" textFill="WHITE">
+            <Button layoutX="19.0" layoutY="151.0" mnemonicParsing="false"
+               style="-fx-background-color: #eab308;" text="Edit" textFill="WHITE">
                <font>
                   <Font name="Segoe UI" size="18.0" />
                </font>
@@ -82,7 +94,8 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label layoutX="23.0" layoutY="176.0" text="Email: jirakarnjim1@gmail.com" textFill="WHITE">
+            <Label layoutX="23.0" layoutY="176.0" text="Email: jirakarnjim1@gmail.com"
+               textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>
