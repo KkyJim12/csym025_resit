@@ -13,7 +13,7 @@
     fx:controller="com.csym025_resit.AddStockController">
     <children>
         <TextField layoutX="307.0" layoutY="135.0" prefHeight="35.0" prefWidth="438.0"
-            promptText="Product name">
+            promptText="Product name" fx:id="productNameInput">
             <font>
                 <Font name="Segoe UI" size="18.0" />
             </font>
@@ -21,7 +21,7 @@
         <Button layoutX="301.0" layoutY="451.0" mnemonicParsing="false" prefHeight="35.0"
             prefWidth="450.0"
             style="-fx-background-color: #10b981; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 0, 0, 2, 2);"
-            text="Confirm" textFill="WHITE">
+            text="Confirm" textFill="WHITE" onAction="#addStock">
             <font>
                 <Font name="Segoe UI" size="18.0" />
             </font>
@@ -72,7 +72,7 @@
             </font>
         </Label>
         <TextField layoutX="307.0" layoutY="214.0" prefHeight="35.0" prefWidth="438.0"
-            promptText="Category">
+            promptText="Category" fx:id="categoryInput">
             <font>
                 <Font name="Segoe UI" size="18.0" />
             </font>
@@ -83,7 +83,7 @@
             </font>
         </Label>
         <TextField layoutX="307.0" layoutY="297.0" prefHeight="35.0" prefWidth="438.0"
-            promptText="Price per day">
+            promptText="Price per day" fx:id="pricePerDayInput">
             <font>
                 <Font name="Segoe UI" size="18.0" />
             </font>
@@ -94,7 +94,7 @@
             </font>
         </Label>
         <TextField layoutX="307.0" layoutY="379.0" prefHeight="35.0" prefWidth="438.0"
-            promptText="Quantity">
+            promptText="Quantity" fx:id="quantityInput">
             <font>
                 <Font name="Segoe UI" size="18.0" />
             </font>
