@@ -11,7 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
-public class RentController {
+public class AddRentingController {
 
     @FXML
     private Button customerLinkButton;
@@ -43,13 +43,4 @@ public class RentController {
         stage.setScene(scene);
         stage.show();
     }
-
-    public void switchToAddRentingScene(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("AddRenting.fxml"));
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
-
 }
