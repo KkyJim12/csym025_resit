@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Arrays;
+import java.util.UUID;
 
 import com.csym025_resit.Model.Stock;
 
@@ -16,6 +17,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -29,6 +31,8 @@ public class AddStockController {
     private TextField quantityInput;
     @FXML
     private TextField pricePerDayInput;
+    @FXML
+    private Button backButton;
 
     private Stage stage;
     private Scene scene;
@@ -61,6 +65,7 @@ public class AddStockController {
     public void addStock() throws IOException, ClassNotFoundException {
         Stock stock = new Stock();
         String pathname = "src/main/java/com/csym025_resit/Serialization/Stock.ser";
+        stock.id = UUID.randomUUID().toString();
         stock.productName = productNameInput.getText();
         stock.category = categoryInput.getText();
         stock.quantity = Integer.parseInt(quantityInput.getText());
@@ -91,5 +96,6 @@ public class AddStockController {
             fileOut.close();
         }
 
+        backButton.fire();
     }
 }

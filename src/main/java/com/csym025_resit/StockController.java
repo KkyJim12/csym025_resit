@@ -3,23 +3,27 @@ package com.csym025_resit;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 import com.csym025_resit.Model.Stock;
 
 import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
-import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -72,6 +76,47 @@ public class StockController implements Serializable {
         stage.show();
     }
 
+    private class deleteStock implements EventHandler<Event> {
+        @Override
+        public void handle(Event evt) {
+            try {
+
+                String elementId = ((Button) evt.getSource()).getId();
+
+                String pathname = "src/main/java/com/csym025_resit/Serialization/Stock.ser";
+                File f = new File(pathname);
+                if (f.exists()) {
+                    Stock[] stocks = null;
+                    FileInputStream fileIn = new FileInputStream(pathname);
+                    ObjectInputStream in = new ObjectInputStream(fileIn);
+                    stocks = (Stock[]) in.readObject();
+                    in.close();
+                    fileIn.close();
+
+                    Stock[] newStocks = new Stock[] {};
+
+                    for (int i = 0, k = 0; i < stocks.length; i++) {
+                        if (stocks[i].id != elementId) {
+                            newStocks[k] = stocks[i];
+                            k++;
+                        }
+                    }
+
+                    System.out.println(newStocks.length);
+
+                    FileOutputStream fileOut = new FileOutputStream(pathname);
+                    ObjectOutputStream out = new ObjectOutputStream(fileOut);
+                    out.writeObject(newStocks);
+                    out.close();
+                    fileOut.close();
+
+                }
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+    }
+
     public void getAllStocks() throws IOException, ClassNotFoundException, FileNotFoundException {
 
         String pathname = "src/main/java/com/csym025_resit/Serialization/Stock.ser";
@@ -107,6 +152,8 @@ public class StockController implements Serializable {
                 Button deleteButton = new Button("Delete");
                 deleteButton.setStyle("-fx-font-size:15; -fx-font-family: Segoe UI; -fx-background-color:#f97316");
                 deleteButton.setTextFill(Color.color(1, 1, 1));
+                deleteButton.setId(stocks[i].id);
+                deleteButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new deleteStock());
                 HBox manageSection = new HBox(editButton, deleteButton);
                 manageSection.setSpacing(10);
 

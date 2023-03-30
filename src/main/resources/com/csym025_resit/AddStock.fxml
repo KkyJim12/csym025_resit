@@ -33,7 +33,7 @@
         </Label>
         <Button layoutX="685.0" layoutY="39.0" mnemonicParsing="false"
             style="-fx-background-color: #f59e0b; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 0, 0, 2, 2);"
-            text="Back" textFill="WHITE" onAction="#switchToStockScene">
+            text="Back" textFill="WHITE" onAction="#switchToStockScene" fx:id="backButton">
             <font>
                 <Font name="Segoe UI" size="18.0" />
             </font>
