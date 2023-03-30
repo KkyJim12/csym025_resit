@@ -13,12 +13,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -82,6 +84,10 @@ public class StockController implements Serializable {
             in.close();
             fileIn.close();
 
+            GridPane grid = new GridPane();
+            grid.setPadding(new Insets(5));
+            grid.setVgap(10);
+
             for (int i = 0; i < stocks.length; i++) {
                 Label productName = new Label(stocks[i].productName);
                 productName.setStyle("-fx-font-size:32; -fx-font-weight:bold; -fx-font-family: Segoe UI");
@@ -111,12 +117,15 @@ public class StockController implements Serializable {
                 stockCard.getChildren().add(quantity);
                 stockCard.getChildren().add(manageSection);
 
-                stockCard.setPrefSize(450, 180);
+                stockCard.setPrefSize(425, 150);
                 stockCard.setPadding(new Insets(10, 20, 10, 20));
                 stockCard.setStyle("-fx-background-color:#ef4444");
 
-                showArea.setContent(stockCard);
+                grid.add(stockCard, 1, i);
             }
+
+            showArea.setContent(grid);
+            showArea.setPannable(true);
 
         }
     }
