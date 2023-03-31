@@ -23,6 +23,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -38,6 +39,9 @@ public class StockController implements Serializable {
 
     @FXML
     private ScrollPane showArea;
+
+    @FXML
+    private TextField searchInput;
 
     @FXML
     public void initialize() throws IOException, ClassNotFoundException {
@@ -102,8 +106,6 @@ public class StockController implements Serializable {
                         }
                     }
 
-                    System.out.println(newStocks.length);
-
                     FileOutputStream fileOut = new FileOutputStream(pathname);
                     ObjectOutputStream out = new ObjectOutputStream(fileOut);
                     out.writeObject(newStocks);
@@ -114,6 +116,67 @@ public class StockController implements Serializable {
             } catch (Exception e) {
                 System.out.println(e);
             }
+        }
+    }
+
+    public void search() throws IOException, ClassNotFoundException, FileNotFoundException {
+        String pathname = "src/main/java/com/csym025_resit/Serialization/Stock.ser";
+        File f = new File(pathname);
+        if (f.exists()) {
+            Stock[] stocks = null;
+            FileInputStream fileIn = new FileInputStream(pathname);
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+            stocks = (Stock[]) in.readObject();
+            in.close();
+            fileIn.close();
+
+            GridPane grid = new GridPane();
+            grid.setPadding(new Insets(5));
+            grid.setVgap(10);
+
+            for (int i = 0; i < stocks.length; i++) {
+                if (stocks[i].productName.contains(searchInput.getText())) {
+                    Label productName = new Label(stocks[i].productName);
+                    productName.setStyle("-fx-font-size:32; -fx-font-weight:bold; -fx-font-family: Segoe UI");
+                    productName.setTextFill(Color.color(1, 1, 1));
+                    Label category = new Label("Category: " + stocks[i].category);
+                    category.setStyle("-fx-font-size:15; -fx-font-family: Segoe UI");
+                    category.setTextFill(Color.color(1, 1, 1));
+                    Label pricePerDay = new Label("Price Per Day: " + Integer.toString(stocks[i].pricePerDay));
+                    pricePerDay.setStyle("-fx-font-size:15; -fx-font-family: Segoe UI");
+                    pricePerDay.setTextFill(Color.color(1, 1, 1));
+                    Label quantity = new Label("Quantity: " + Integer.toString(stocks[i].quantity));
+                    quantity.setStyle("-fx-font-size:15; -fx-font-family: Segoe UI");
+                    quantity.setTextFill(Color.color(1, 1, 1));
+                    Button editButton = new Button("Edit");
+                    editButton.setStyle("-fx-font-size:15; -fx-font-family: Segoe UI; -fx-background-color:#eab308");
+                    editButton.setTextFill(Color.color(1, 1, 1));
+                    Button deleteButton = new Button("Delete");
+                    deleteButton.setStyle("-fx-font-size:15; -fx-font-family: Segoe UI; -fx-background-color:#f97316");
+                    deleteButton.setTextFill(Color.color(1, 1, 1));
+                    deleteButton.setId(stocks[i].id);
+                    deleteButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new deleteStock());
+                    HBox manageSection = new HBox(editButton, deleteButton);
+                    manageSection.setSpacing(10);
+
+                    VBox stockCard = new VBox();
+                    stockCard.getChildren().add(productName);
+                    stockCard.getChildren().add(category);
+                    stockCard.getChildren().add(pricePerDay);
+                    stockCard.getChildren().add(quantity);
+                    stockCard.getChildren().add(manageSection);
+
+                    stockCard.setPrefSize(425, 150);
+                    stockCard.setPadding(new Insets(10, 20, 10, 20));
+                    stockCard.setStyle("-fx-background-color:#ef4444");
+
+                    grid.add(stockCard, 1, i);
+                }
+            }
+
+            showArea.setContent(grid);
+            showArea.setPannable(true);
+
         }
     }
 
