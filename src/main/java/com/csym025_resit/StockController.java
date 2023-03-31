@@ -80,45 +80,6 @@ public class StockController implements Serializable {
         stage.show();
     }
 
-    private class deleteStock implements EventHandler<Event> {
-        @Override
-        public void handle(Event evt) {
-            try {
-
-                String elementId = ((Button) evt.getSource()).getId();
-
-                String pathname = "src/main/java/com/csym025_resit/Serialization/Stock.ser";
-                File f = new File(pathname);
-                if (f.exists()) {
-                    Stock[] stocks = null;
-                    FileInputStream fileIn = new FileInputStream(pathname);
-                    ObjectInputStream in = new ObjectInputStream(fileIn);
-                    stocks = (Stock[]) in.readObject();
-                    in.close();
-                    fileIn.close();
-
-                    Stock[] newStocks = new Stock[] {};
-
-                    for (int i = 0, k = 0; i < stocks.length; i++) {
-                        if (stocks[i].id != elementId) {
-                            newStocks[k] = stocks[i];
-                            k++;
-                        }
-                    }
-
-                    FileOutputStream fileOut = new FileOutputStream(pathname);
-                    ObjectOutputStream out = new ObjectOutputStream(fileOut);
-                    out.writeObject(newStocks);
-                    out.close();
-                    fileOut.close();
-
-                }
-            } catch (Exception e) {
-                System.out.println(e);
-            }
-        }
-    }
-
     public void search() throws IOException, ClassNotFoundException, FileNotFoundException {
         String pathname = "src/main/java/com/csym025_resit/Serialization/Stock.ser";
         File f = new File(pathname);
@@ -237,6 +198,46 @@ public class StockController implements Serializable {
             showArea.setContent(grid);
             showArea.setPannable(true);
 
+        }
+    }
+
+    private class deleteStock implements EventHandler<Event> {
+        @Override
+        public void handle(Event evt) {
+            try {
+
+                String elementId = ((Button) evt.getSource()).getId();
+
+                String pathname = "src/main/java/com/csym025_resit/Serialization/Stock.ser";
+                File f = new File(pathname);
+                if (f.exists()) {
+                    Stock[] stocks = null;
+                    FileInputStream fileIn = new FileInputStream(pathname);
+                    ObjectInputStream in = new ObjectInputStream(fileIn);
+                    stocks = (Stock[]) in.readObject();
+                    in.close();
+                    fileIn.close();
+
+                    Stock[] newStocks = new Stock[stocks.length - 1];
+
+                    for (int i = 0, k = 0; i < stocks.length; i++) {
+                        if (!(stocks[i].id).equals(elementId)) {
+                            newStocks[k] = stocks[i];
+                            k++;
+                        }
+                    }
+
+                    FileOutputStream fileOut = new FileOutputStream(pathname);
+                    ObjectOutputStream out = new ObjectOutputStream(fileOut);
+                    out.writeObject(newStocks);
+                    out.close();
+                    fileOut.close();
+
+                    getAllStocks();
+                }
+            } catch (Exception e) {
+                System.out.println(e);
+            }
         }
     }
 }
