@@ -9,6 +9,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
+import com.csym025_resit.Holder.StockHolder;
 import com.csym025_resit.Model.Stock;
 
 import javafx.event.ActionEvent;
@@ -80,6 +81,27 @@ public class StockController implements Serializable {
         stage.show();
     }
 
+    private class switchToEditStockScene implements EventHandler<Event> {
+        @Override
+        public void handle(Event evt) {
+            try {
+                String elementId = ((Button) evt.getSource()).getId();
+
+                StockHolder holder = StockHolder.getInstance();
+                holder.setStock(elementId);
+
+                root = FXMLLoader.load(getClass().getResource("EditStock.fxml"));
+                stage = (Stage) ((Node) evt.getSource()).getScene().getWindow();
+
+                scene = new Scene(root);
+                stage.setScene(scene);
+                stage.show();
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+    }
+
     public void search() throws IOException, ClassNotFoundException, FileNotFoundException {
         String pathname = "src/main/java/com/csym025_resit/Serialization/Stock.ser";
         File f = new File(pathname);
@@ -112,6 +134,8 @@ public class StockController implements Serializable {
                     Button editButton = new Button("Edit");
                     editButton.setStyle("-fx-font-size:15; -fx-font-family: Segoe UI; -fx-background-color:#eab308");
                     editButton.setTextFill(Color.color(1, 1, 1));
+                    editButton.setId(stocks[i].id);
+                    editButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new switchToEditStockScene());
                     Button deleteButton = new Button("Delete");
                     deleteButton.setStyle("-fx-font-size:15; -fx-font-family: Segoe UI; -fx-background-color:#f97316");
                     deleteButton.setTextFill(Color.color(1, 1, 1));
@@ -173,6 +197,8 @@ public class StockController implements Serializable {
                 Button editButton = new Button("Edit");
                 editButton.setStyle("-fx-font-size:15; -fx-font-family: Segoe UI; -fx-background-color:#eab308");
                 editButton.setTextFill(Color.color(1, 1, 1));
+                editButton.setId(stocks[i].id);
+                editButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new switchToEditStockScene());
                 Button deleteButton = new Button("Delete");
                 deleteButton.setStyle("-fx-font-size:15; -fx-font-family: Segoe UI; -fx-background-color:#f97316");
                 deleteButton.setTextFill(Color.color(1, 1, 1));
