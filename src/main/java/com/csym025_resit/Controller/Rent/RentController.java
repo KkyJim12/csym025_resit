@@ -1,4 +1,4 @@
-package com.csym025_resit;
+package com.csym025_resit.Controller.Rent;
 
 import java.io.IOException;
 
@@ -11,7 +11,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
-public class CustomerController {
+public class RentController {
+
     @FXML
     private Button customerLinkButton;
 
@@ -43,11 +44,12 @@ public class CustomerController {
         stage.show();
     }
 
-    public void switchToAddCustomerScene(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("AddCustomer.fxml"));
+    public void switchToAddRentingScene(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("AddRenting.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
     }
+
 }

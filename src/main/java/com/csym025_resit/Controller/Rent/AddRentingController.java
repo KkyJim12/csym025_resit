@@ -1,4 +1,4 @@
-package com.csym025_resit;
+package com.csym025_resit.Controller.Rent;
 
 import java.io.IOException;
 

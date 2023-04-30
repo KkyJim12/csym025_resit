@@ -1,4 +1,4 @@
-package com.csym025_resit;
+package com.csym025_resit.Controller.Stock;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -16,7 +16,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 public class EditStockController {
