@@ -16,7 +16,7 @@
     fx:controller="com.csym025_resit.AddCustomerController">
     <children>
         <TextField layoutX="307.0" layoutY="109.0" prefHeight="35.0" prefWidth="438.0"
-            promptText="Customer name">
+            promptText="Customer name" fx:id="fullNameInput">
             <font>
                 <Font name="Segoe UI" size="18.0" />
             </font>
@@ -24,7 +24,7 @@
         <Button layoutX="301.0" layoutY="544.0" mnemonicParsing="false" prefHeight="35.0"
             prefWidth="450.0"
             style="-fx-background-color: #10b981; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 0, 0, 2, 2);"
-            text="Confirm" textFill="WHITE">
+            text="Confirm" textFill="WHITE" onAction="#addCustomer">
             <font>
                 <Font name="Segoe UI" size="18.0" />
             </font>
@@ -35,9 +35,9 @@
             </font>
         </Label>
         <Button layoutX="685.0" layoutY="39.0" mnemonicParsing="false"
-            onAction="#switchToStockScene"
+            onAction="#switchToCustomerScene"
             style="-fx-background-color: #f59e0b; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 0, 0, 2, 2);"
-            text="Back" textFill="WHITE">
+            text="Back" textFill="WHITE" fx:id="backButton">
             <font>
                 <Font name="Segoe UI" size="18.0" />
             </font>
@@ -76,7 +76,7 @@
             </font>
         </Label>
         <TextField layoutX="307.0" layoutY="200.0" prefHeight="35.0" prefWidth="438.0"
-            promptText="Email">
+            promptText="Email" fx:id="emailInput">
             <font>
                 <Font name="Segoe UI" size="18.0" />
             </font>
@@ -87,7 +87,7 @@
             </font>
         </Label>
         <TextField layoutX="307.0" layoutY="270.0" prefHeight="35.0" prefWidth="438.0"
-            promptText="Phone">
+            promptText="Phone" fx:id="phoneInput">
             <font>
                 <Font name="Segoe UI" size="18.0" />
             </font>
@@ -102,8 +102,8 @@
                 <Font name="Segoe UI" size="14.0" />
             </font>
         </Label>
-        <TextArea layoutX="307.0" layoutY="356.0" prefHeight="113.0" prefWidth="438.0" />
-        <RadioButton layoutX="308.0" layoutY="501.0" mnemonicParsing="false" text="Male" />
-        <RadioButton layoutX="377.0" layoutY="501.0" mnemonicParsing="false" text="Female" />
+        <TextArea layoutX="307.0" layoutY="356.0" prefHeight="113.0" prefWidth="438.0" fx:id="addressInput" />
+        <RadioButton layoutX="308.0" layoutY="501.0" mnemonicParsing="false" text="Male" fx:id="genderMaleInput" />
+        <RadioButton layoutX="377.0" layoutY="501.0" mnemonicParsing="false" text="Female"  fx:id="genderFemaleInput"/>
     </children>
 </Pane>
