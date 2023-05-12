@@ -10,7 +10,7 @@
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
     prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #3b82f6;"
     xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1"
-    fx:controller="com.csym025_resit.Controller.Stock.AddStockController">
+    fx:controller="com.csym025_resit.AddStockController">
     <children>
         <TextField layoutX="307.0" layoutY="135.0" prefHeight="35.0" prefWidth="438.0"
             promptText="Product name" fx:id="productNameInput">

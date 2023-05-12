@@ -1,4 +1,4 @@
-package com.csym025_resit.Controller.Customer;
+package com.csym025_resit;
 
 import java.io.IOException;
 

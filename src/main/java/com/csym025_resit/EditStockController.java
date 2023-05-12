@@ -1,4 +1,4 @@
-package com.csym025_resit.Controller.Stock;
+package com.csym025_resit;
 
 import java.io.File;
 import java.io.FileInputStream;
