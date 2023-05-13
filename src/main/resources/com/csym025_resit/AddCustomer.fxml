@@ -6,6 +6,7 @@
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
@@ -102,8 +103,15 @@
                 <Font name="Segoe UI" size="14.0" />
             </font>
         </Label>
-        <TextArea layoutX="307.0" layoutY="356.0" prefHeight="113.0" prefWidth="438.0" fx:id="addressInput" />
-        <RadioButton layoutX="308.0" layoutY="501.0" mnemonicParsing="false" text="Male" fx:id="genderMaleInput" />
-        <RadioButton layoutX="377.0" layoutY="501.0" mnemonicParsing="false" text="Female"  fx:id="genderFemaleInput"/>
+        <TextArea layoutX="307.0" layoutY="356.0" prefHeight="113.0" prefWidth="438.0"
+            fx:id="addressInput" />
+
+        <fx:define>
+            <ToggleGroup fx:id="group" />
+        </fx:define>
+        <RadioButton layoutX="308.0" layoutY="501.0" mnemonicParsing="false" text="Male"
+            toggleGroup="$group" fx:id="genderMaleInput" />
+        <RadioButton layoutX="377.0" layoutY="501.0" mnemonicParsing="false" text="Female"
+            toggleGroup="$group" fx:id="genderFemaleInput" />
     </children>
 </Pane>

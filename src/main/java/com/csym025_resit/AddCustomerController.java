@@ -45,13 +45,18 @@ public class AddCustomerController {
 
     @FXML
     private RadioButton genderFemaleInput;
-    
+
     @FXML
     private Button backButton;
 
     private Stage stage;
     private Scene scene;
     private Parent root;
+
+    @FXML
+    public void initialize() throws IOException, ClassNotFoundException {
+        genderMaleInput.setSelected(true);
+    }
 
     public void switchToCustomerScene(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("Customer.fxml"));

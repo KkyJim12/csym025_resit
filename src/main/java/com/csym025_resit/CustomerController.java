@@ -3,12 +3,17 @@ package com.csym025_resit;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
+import com.csym025_resit.Holder.CustomerHolder;
 import com.csym025_resit.Model.Customer;
 
 import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -18,6 +23,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -71,7 +77,27 @@ public class CustomerController {
         stage.setScene(scene);
         stage.show();
     }
-    
+
+    private class switchToEditCustomerScreen implements EventHandler<Event> {
+        @Override
+        public void handle(Event evt) {
+            try {
+                String elementId = ((Button) evt.getSource()).getId();
+
+                CustomerHolder holder = CustomerHolder.getInstance();
+                holder.setCustomer(elementId);
+
+                root = FXMLLoader.load(getClass().getResource("EditCustomer.fxml"));
+                stage = (Stage) ((Node) evt.getSource()).getScene().getWindow();
+
+                scene = new Scene(root);
+                stage.setScene(scene);
+                stage.show();
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+    }
 
     public void getAllCustomers() throws IOException, ClassNotFoundException, FileNotFoundException {
 
@@ -109,12 +135,12 @@ public class CustomerController {
                 editButton.setStyle("-fx-font-size:15; -fx-font-family: Segoe UI; -fx-background-color:#eab308");
                 editButton.setTextFill(Color.color(1, 1, 1));
                 editButton.setId(customers[i].id);
-                // editButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new switchToEditCustomerScreen());
+                editButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new switchToEditCustomerScreen());
                 Button deleteButton = new Button("Delete");
                 deleteButton.setStyle("-fx-font-size:15; -fx-font-family: Segoe UI; -fx-background-color:#f97316");
                 deleteButton.setTextFill(Color.color(1, 1, 1));
                 deleteButton.setId(customers[i].id);
-                // deleteButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new deleteCustomer());
+                deleteButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new deleteCustomer());
                 HBox manageSection = new HBox(editButton, deleteButton);
                 manageSection.setSpacing(10);
 
@@ -136,6 +162,46 @@ public class CustomerController {
             showArea.setContent(grid);
             showArea.setPannable(true);
 
+        }
+    }
+
+    private class deleteCustomer implements EventHandler<Event> {
+        @Override
+        public void handle(Event evt) {
+            try {
+
+                String elementId = ((Button) evt.getSource()).getId();
+
+                String pathname = "src/main/java/com/csym025_resit/Serialization/Customer.ser";
+                File f = new File(pathname);
+                if (f.exists()) {
+                    Customer[] customers = null;
+                    FileInputStream fileIn = new FileInputStream(pathname);
+                    ObjectInputStream in = new ObjectInputStream(fileIn);
+                    customers = (Customer[]) in.readObject();
+                    in.close();
+                    fileIn.close();
+
+                    Customer[] newCustomers = new Customer[customers.length - 1];
+
+                    for (int i = 0, k = 0; i < customers.length; i++) {
+                        if (!(customers[i].id).equals(elementId)) {
+                            newCustomers[k] = customers[i];
+                            k++;
+                        }
+                    }
+
+                    FileOutputStream fileOut = new FileOutputStream(pathname);
+                    ObjectOutputStream out = new ObjectOutputStream(fileOut);
+                    out.writeObject(newCustomers);
+                    out.close();
+                    fileOut.close();
+
+                    getAllCustomers();
+                }
+            } catch (Exception e) {
+                System.out.println(e);
+            }
         }
     }
 }
