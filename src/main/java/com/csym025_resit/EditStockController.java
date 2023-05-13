@@ -2,8 +2,11 @@ package com.csym025_resit;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.Arrays;
 
 import com.csym025_resit.Holder.StockHolder;
 import com.csym025_resit.Model.Stock;
@@ -33,6 +36,8 @@ public class EditStockController {
     private TextField quantityInput;
     @FXML
     private TextField pricePerDayInput;
+    @FXML
+    private Button backButton;
 
     public void initialize() throws ClassNotFoundException {
         getStock();
@@ -60,6 +65,51 @@ public class EditStockController {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void updateStock() throws IOException, ClassNotFoundException {
+        String pathname = "src/main/java/com/csym025_resit/Serialization/Stock.ser";
+        StockHolder holder = StockHolder.getInstance();
+        String stockId = holder.getStock();
+
+        System.out.println(stockId);
+
+        File f = new File(pathname);
+        if (f.exists()) {
+            Stock stock = null;
+            Stock[] stocks = null;
+            FileInputStream fileIn = new FileInputStream(pathname);
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+            stocks = (Stock[]) in.readObject();
+            in.close();
+            fileIn.close();
+
+            int index = 0;
+
+            for (int i = 0; i < stocks.length; i++) {
+                if ((stocks[i].id).equals(stockId)) {
+                    stock = stocks[i];
+                    index = i;
+                    break;
+                }
+            }
+
+            stock.productName = productNameInput.getText();
+            stock.category = categoryInput.getText();
+            stock.quantity = Integer.parseInt(quantityInput.getText());
+            stock.pricePerDay = Integer.parseInt(pricePerDayInput.getText());
+
+            Stock[] newStocks = Arrays.copyOf(stocks, stocks.length);
+            newStocks[index] = stock;
+
+            FileOutputStream fileOut = new FileOutputStream(pathname);
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            out.writeObject(newStocks);
+            out.close();
+            fileOut.close();
+        }
+
+        backButton.fire();
     }
 
     public void getStock() {

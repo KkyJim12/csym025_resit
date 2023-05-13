@@ -2,8 +2,11 @@ package com.csym025_resit;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.Arrays;
 
 import com.csym025_resit.Holder.CustomerHolder;
 import com.csym025_resit.Model.Customer;
@@ -39,6 +42,8 @@ public class EditCustomerController {
     private RadioButton genderMaleInput;
     @FXML
     private RadioButton genderFemaleInput;
+    @FXML
+    private Button backButton;
 
     public void initialize() throws ClassNotFoundException {
         getCustomer();
@@ -66,6 +71,57 @@ public class EditCustomerController {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void updateCustomer() throws IOException, ClassNotFoundException {
+        String pathname = "src/main/java/com/csym025_resit/Serialization/Customer.ser";
+        CustomerHolder holder = CustomerHolder.getInstance();
+        String customerId = holder.getCustomer();
+
+        System.out.println(customerId);
+
+        File f = new File(pathname);
+        if (f.exists()) {
+            Customer customer = null;
+            Customer[] customers = null;
+            FileInputStream fileIn = new FileInputStream(pathname);
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+            customers = (Customer[]) in.readObject();
+            in.close();
+            fileIn.close();
+
+            int index = 0;
+
+            for (int i = 0; i < customers.length; i++) {
+                if ((customers[i].id).equals(customerId)) {
+                    customer = customers[i];
+                    index = i;
+                    break;
+                }
+            }
+
+            customer.fullName = fullNameInput.getText();
+            customer.email = emailInput.getText();
+            customer.phone = phoneInput.getText();
+            customer.address = addressInput.getText();
+
+            if (genderMaleInput.isSelected()) {
+                customer.gender = "Male";
+            } else {
+                customer.gender = "Female";
+            }
+
+            Customer[] newCustomers = Arrays.copyOf(customers, customers.length);
+            newCustomers[index] = customer;
+
+            FileOutputStream fileOut = new FileOutputStream(pathname);
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            out.writeObject(newCustomers);
+            out.close();
+            fileOut.close();
+        }
+
+        backButton.fire();
     }
 
     public void getCustomer() {
@@ -96,7 +152,9 @@ public class EditCustomerController {
                 phoneInput.setText(customer.phone);
                 addressInput.setText(customer.address);
 
-                if (customer.gender == "Male") {
+                System.out.println(customer.gender);
+
+                if (customer.gender.equals("Male")) {
                     genderMaleInput.setSelected(true);
                 } else {
                     genderFemaleInput.setSelected(true);

@@ -90,7 +90,7 @@ public class AddCustomerController {
         customer.email = emailInput.getText();
         customer.phone = phoneInput.getText();
         customer.address = addressInput.getText();
-        if (genderMaleInput.getText() == "Male") {
+        if (genderMaleInput.isSelected()) {
             customer.gender = "Male";
         } else {
             customer.gender = "Female";
