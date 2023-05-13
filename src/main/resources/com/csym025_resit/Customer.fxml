@@ -16,14 +16,14 @@
    fx:controller="com.csym025_resit.CustomerController">
    <children>
       <TextField layoutX="308.0" layoutY="104.0" prefHeight="35.0" prefWidth="377.0"
-         promptText="Type something...">
+         promptText="Type something..." fx:id="searchInput">
          <font>
             <Font name="Segoe UI" size="18.0" />
          </font>
       </TextField>
       <Button layoutX="671.0" layoutY="103.0" mnemonicParsing="false"
          style="-fx-background-color: #10b981; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 0, 0, 2, 2);"
-         text="Search" textFill="WHITE">
+         text="Search" textFill="WHITE" onAction="#search">
          <font>
             <Font name="Segoe UI" size="18.0" />
          </font>

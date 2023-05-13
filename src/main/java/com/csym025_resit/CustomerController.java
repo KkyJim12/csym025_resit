@@ -23,6 +23,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -36,6 +37,9 @@ public class CustomerController {
 
     @FXML
     private ScrollPane showArea;
+
+    @FXML
+    private TextField searchInput;
 
     private Stage stage;
     private Scene scene;
@@ -96,6 +100,74 @@ public class CustomerController {
             } catch (Exception e) {
                 System.out.println(e);
             }
+        }
+    }
+
+    public void search() throws IOException, ClassNotFoundException, FileNotFoundException {
+        String pathname = "src/main/java/com/csym025_resit/Serialization/Customer.ser";
+        File f = new File(pathname);
+        if (f.exists()) {
+            Customer[] customers = null;
+            FileInputStream fileIn = new FileInputStream(pathname);
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+            customers = (Customer[]) in.readObject();
+            in.close();
+            fileIn.close();
+
+            GridPane grid = new GridPane();
+            grid.setPadding(new Insets(5));
+            grid.setVgap(10);
+
+            for (int i = 0; i < customers.length; i++) {
+
+                if (customers[i].fullName.contains(searchInput.getText())) {
+                    Label fullName = new Label(customers[i].fullName);
+                    fullName.setStyle("-fx-font-size:32; -fx-font-weight:bold; -fx-font-family: Segoe UI");
+                    fullName.setTextFill(Color.color(1, 1, 1));
+                    Label email = new Label("Email: " + customers[i].email);
+                    email.setStyle("-fx-font-size:15; -fx-font-family: Segoe UI");
+                    email.setTextFill(Color.color(1, 1, 1));
+                    Label phone = new Label("Phone: " + customers[i].phone);
+                    phone.setStyle("-fx-font-size:15; -fx-font-family: Segoe UI");
+                    phone.setTextFill(Color.color(1, 1, 1));
+                    Label address = new Label("Address: " + customers[i].address);
+                    address.setStyle("-fx-font-size:15; -fx-font-family: Segoe UI");
+                    address.setTextFill(Color.color(1, 1, 1));
+                    Label gender = new Label("Gender: " + customers[i].gender);
+                    gender.setStyle("-fx-font-size:15; -fx-font-family: Segoe UI");
+                    gender.setTextFill(Color.color(1, 1, 1));
+                    Button editButton = new Button("Edit");
+                    editButton.setStyle("-fx-font-size:15; -fx-font-family: Segoe UI; -fx-background-color:#eab308");
+                    editButton.setTextFill(Color.color(1, 1, 1));
+                    editButton.setId(customers[i].id);
+                    editButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new switchToEditCustomerScreen());
+                    Button deleteButton = new Button("Delete");
+                    deleteButton.setStyle("-fx-font-size:15; -fx-font-family: Segoe UI; -fx-background-color:#f97316");
+                    deleteButton.setTextFill(Color.color(1, 1, 1));
+                    deleteButton.setId(customers[i].id);
+                    deleteButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new deleteCustomer());
+                    HBox manageSection = new HBox(editButton, deleteButton);
+                    manageSection.setSpacing(10);
+
+                    VBox customerCard = new VBox();
+                    customerCard.getChildren().add(fullName);
+                    customerCard.getChildren().add(email);
+                    customerCard.getChildren().add(phone);
+                    customerCard.getChildren().add(address);
+                    customerCard.getChildren().add(gender);
+                    customerCard.getChildren().add(manageSection);
+
+                    customerCard.setPrefSize(425, 150);
+                    customerCard.setPadding(new Insets(10, 20, 10, 20));
+                    customerCard.setStyle("-fx-background-color:#ef4444");
+
+                    grid.add(customerCard, 1, i);
+                }
+
+                showArea.setContent(grid);
+                showArea.setPannable(true);
+            }
+
         }
     }
 
