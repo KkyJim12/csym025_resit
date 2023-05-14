@@ -8,7 +8,6 @@ public class Invoice implements Serializable {
     public String customerName;
     public Cart[] cart;
     public int totalPrice;
-    public int discount;
     public int lastPrice;
     public LocalDateTime rentDate;
     public LocalDateTime returnDate;

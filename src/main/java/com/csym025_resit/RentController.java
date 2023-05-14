@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 
 import com.csym025_resit.Holder.InvoiceHolder;
@@ -108,16 +110,11 @@ public class RentController {
                 Label customerName = new Label("Customer: " + invoices[i].customerName);
                 customerName.setStyle("-fx-font-size:15; -fx-font-family: Segoe UI");
                 customerName.setTextFill(Color.color(1, 1, 1));
-                Label totalPrice = new Label("TotalPrice: " + Integer.toString(invoices[i].totalPrice));
+                Label totalPrice = new Label("TotalPrice Per Day: " + Integer.toString(invoices[i].totalPrice));
                 totalPrice.setStyle("-fx-font-size:15; -fx-font-family: Segoe UI");
                 totalPrice.setTextFill(Color.color(1, 1, 1));
-                Label discount = new Label("Discount: " + Integer.toString(invoices[i].discount));
-                discount.setStyle("-fx-font-size:15; -fx-font-family: Segoe UI");
-                discount.setTextFill(Color.color(1, 1, 1));
-                Label lastPrice = new Label("LastPrice: " + Integer.toString(invoices[i].lastPrice));
-                lastPrice.setStyle("-fx-font-size:15; -fx-font-family: Segoe UI");
-                lastPrice.setTextFill(Color.color(1, 1, 1));
-                Label rentDate = new Label("Rent Date: " + invoices[i].rentDate);
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm a");
+                Label rentDate = new Label("Rent Date: " + invoices[i].rentDate.format(formatter));
                 rentDate.setStyle("-fx-font-size:15; -fx-font-family: Segoe UI");
                 rentDate.setTextFill(Color.color(1, 1, 1));
 
@@ -140,12 +137,17 @@ public class RentController {
                 invoiceCard.getChildren().add(invoiceName);
                 invoiceCard.getChildren().add(customerName);
                 invoiceCard.getChildren().add(totalPrice);
-                invoiceCard.getChildren().add(discount);
-                invoiceCard.getChildren().add(lastPrice);
                 invoiceCard.getChildren().add(rentDate);
 
                 if (invoices[i].returnDate != null) {
-                    Label returnDate = new Label("Return Date: " + invoices[i].returnDate);
+                    int days = Math.toIntExact(ChronoUnit.DAYS.between(invoices[i].rentDate, invoices[i].returnDate))
+                            + 1;
+                    Label lastPrice = new Label("Last Price: " + invoices[i].totalPrice * days);
+                    lastPrice.setStyle("-fx-font-size:15; -fx-font-family: Segoe UI");
+                    lastPrice.setTextFill(Color.color(1, 1, 1));
+                    invoiceCard.getChildren().add(lastPrice);
+
+                    Label returnDate = new Label("Return Date: " + invoices[i].returnDate.format(formatter));
                     returnDate.setStyle("-fx-font-size:15; -fx-font-family: Segoe UI");
                     returnDate.setTextFill(Color.color(1, 1, 1));
                     invoiceCard.getChildren().add(returnDate);
@@ -212,7 +214,6 @@ public class RentController {
                     invoice.customerName = invoices[index].customerName;
                     invoice.cart = invoices[index].cart;
                     invoice.totalPrice = invoices[index].totalPrice;
-                    invoice.discount = invoices[index].discount;
                     invoice.lastPrice = invoices[index].lastPrice;
                     invoice.rentDate = invoices[index].rentDate;
                     invoice.returnDate = LocalDateTime.now();

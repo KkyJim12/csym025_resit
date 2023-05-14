@@ -28,7 +28,6 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -265,7 +264,6 @@ public class AddRentingController {
 
     public void addInvoice() throws IOException, ClassNotFoundException, FileNotFoundException {
         int totalPrice = 0;
-        int discount = 0;
         int lastPrice = 0;
         Cart[] cart = null;
 
@@ -291,7 +289,6 @@ public class AddRentingController {
         invoice.customerName = customerInput.getValue();
         invoice.cart = cart;
         invoice.totalPrice = totalPrice;
-        invoice.discount = discount;
         invoice.lastPrice = lastPrice;
         invoice.rentDate = LocalDateTime.now();
         invoice.returnDate = null;

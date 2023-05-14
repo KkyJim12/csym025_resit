@@ -27,32 +27,22 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label fx:id="discountLabel" layoutX="157.0" layoutY="408.0" prefHeight="20.0" prefWidth="101.0" text="Discount:">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <Label fx:id="lastPriceLabel" layoutX="282.0" layoutY="408.0" prefHeight="20.0" prefWidth="132.0" text="Last Price:">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
             <Label fx:id="rentDateLabel" layoutX="22.0" layoutY="317.0" prefHeight="17.0" prefWidth="326.0" text="Rent Date:">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label fx:id="returnDateLabel" layoutX="22.0" layoutY="347.0" prefHeight="20.0" prefWidth="236.0" text="Return Date:">
+            <Label fx:id="returnDateLabel" layoutX="22.0" layoutY="347.0" prefHeight="20.0" prefWidth="236.0" text="">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label fx:id="totalPriceLabel" layoutX="22.0" layoutY="408.0" prefHeight="20.0" prefWidth="119.0" text="Total Price:">
+            <Label fx:id="lastPriceLabel" layoutX="22.0" layoutY="408.0" prefHeight="20.0" prefWidth="119.0" text="">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label fx:id="totalDayLabel" layoutX="255.0" layoutY="347.0" prefHeight="20.0" prefWidth="168.0" text="Total Day:">
+            <Label fx:id="totalDayLabel" layoutX="255.0" layoutY="347.0" prefHeight="20.0" prefWidth="168.0" text="">
                <font>
                   <Font size="14.0" />
                </font>
