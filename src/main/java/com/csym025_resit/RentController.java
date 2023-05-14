@@ -87,6 +87,97 @@ public class RentController {
         stage.show();
     }
 
+    public void search() throws IOException, ClassNotFoundException, FileNotFoundException {
+
+        String pathname = "src/main/java/com/csym025_resit/Serialization/Invoice.ser";
+        File f = new File(pathname);
+        if (f.exists()) {
+            Invoice[] invoices = null;
+            FileInputStream fileIn = new FileInputStream(pathname);
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+            invoices = (Invoice[]) in.readObject();
+            in.close();
+            fileIn.close();
+
+            GridPane grid = new GridPane();
+            grid.setPadding(new Insets(5));
+            grid.setVgap(10);
+
+            for (int i = 0; i < invoices.length; i++) {
+                if (invoices[i].customerName.contains(searchInput.getText())) {
+                    Label invoiceName = new Label("Invoice-" + invoices[i].id);
+                    invoiceName.setStyle("-fx-font-size:32; -fx-font-weight:bold; -fx-font-family: Segoe UI");
+                    invoiceName.setTextFill(Color.color(1, 1, 1));
+                    Label customerName = new Label("Customer: " + invoices[i].customerName);
+                    customerName.setStyle("-fx-font-size:15; -fx-font-family: Segoe UI");
+                    customerName.setTextFill(Color.color(1, 1, 1));
+                    Label totalPrice = new Label("TotalPrice Per Day: " + Integer.toString(invoices[i].totalPrice));
+                    totalPrice.setStyle("-fx-font-size:15; -fx-font-family: Segoe UI");
+                    totalPrice.setTextFill(Color.color(1, 1, 1));
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm a");
+                    Label rentDate = new Label("Rent Date: " + invoices[i].rentDate.format(formatter));
+                    rentDate.setStyle("-fx-font-size:15; -fx-font-family: Segoe UI");
+                    rentDate.setTextFill(Color.color(1, 1, 1));
+
+                    Button viewInvoiceButton = new Button("View Invoice");
+                    viewInvoiceButton
+                            .setStyle("-fx-font-size:15; -fx-font-family: Segoe UI; -fx-background-color:#f97316");
+                    viewInvoiceButton.setTextFill(Color.color(1, 1, 1));
+                    viewInvoiceButton.setId(invoices[i].id);
+                    viewInvoiceButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new viewInvoice());
+
+                    Button acceptReturnButton = new Button("Accept Return");
+                    acceptReturnButton
+                            .setStyle("-fx-font-size:15; -fx-font-family: Segoe UI; -fx-background-color:#10b981");
+                    acceptReturnButton.setTextFill(Color.color(1, 1, 1));
+                    acceptReturnButton.setId(invoices[i].id);
+                    acceptReturnButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new acceptReturn());
+                    HBox manageSection = new HBox(viewInvoiceButton, acceptReturnButton);
+                    manageSection.setSpacing(10);
+
+                    VBox invoiceCard = new VBox();
+                    invoiceCard.getChildren().add(invoiceName);
+                    invoiceCard.getChildren().add(customerName);
+                    invoiceCard.getChildren().add(totalPrice);
+                    invoiceCard.getChildren().add(rentDate);
+
+                    if (invoices[i].returnDate != null) {
+                        int days = Math
+                                .toIntExact(ChronoUnit.DAYS.between(invoices[i].rentDate, invoices[i].returnDate))
+                                + 1;
+                        Label lastPrice = new Label("Last Price: " + invoices[i].totalPrice * days);
+                        lastPrice.setStyle("-fx-font-size:15; -fx-font-family: Segoe UI");
+                        lastPrice.setTextFill(Color.color(1, 1, 1));
+                        invoiceCard.getChildren().add(lastPrice);
+
+                        Label returnDate = new Label("Return Date: " + invoices[i].returnDate.format(formatter));
+                        returnDate.setStyle("-fx-font-size:15; -fx-font-family: Segoe UI");
+                        returnDate.setTextFill(Color.color(1, 1, 1));
+                        invoiceCard.getChildren().add(returnDate);
+
+                        manageSection = new HBox(viewInvoiceButton);
+                    }
+
+                    invoiceCard.getChildren().add(manageSection);
+
+                    invoiceCard.setPrefSize(425, 150);
+                    invoiceCard.setPadding(new Insets(10, 20, 10, 20));
+
+                    if (invoices[i].returnDate != null) {
+                        invoiceCard.setStyle("-fx-background-color:#22c55e");
+                    } else {
+                        invoiceCard.setStyle("-fx-background-color:#ef4444");
+                    }
+                    grid.add(invoiceCard, 1, i);
+                }
+            }
+
+            showArea.setContent(grid);
+            showArea.setPannable(true);
+
+        }
+    }
+
     public void getAllInvoices() throws IOException, ClassNotFoundException, FileNotFoundException {
 
         String pathname = "src/main/java/com/csym025_resit/Serialization/Invoice.ser";
@@ -188,7 +279,6 @@ public class RentController {
                 InvoiceHolder holder2 = InvoiceHolder.getInstance();
                 String invoiceId = holder2.getInvoice();
 
-                System.out.println(invoiceId);
 
                 File f = new File(pathname);
                 if (f.exists()) {
