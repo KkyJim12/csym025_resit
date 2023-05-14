@@ -4,9 +4,9 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
@@ -29,7 +29,7 @@
             </font>
         </Label>
         <Button layoutX="685.0" layoutY="39.0" mnemonicParsing="false"
-            onAction="#switchToStockScene"
+            onAction="#switchToRentScene"
             style="-fx-background-color: #f59e0b; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 0, 0, 2, 2);"
             text="Back" textFill="WHITE">
             <font>
@@ -69,32 +69,36 @@
                 <Font name="Segoe UI" size="14.0" />
             </font>
         </Label>
-        <ChoiceBox layoutX="307.0" layoutY="115.0" prefHeight="35.0" prefWidth="438.0" />
+        <ChoiceBox layoutX="307.0" layoutY="115.0" prefHeight="35.0" prefWidth="438.0"
+            fx:id="customerInput" />
         <Label layoutX="307.0" layoutY="179.0" text="Products" textFill="WHITE">
             <font>
                 <Font name="Segoe UI" size="14.0" />
             </font>
         </Label>
-        <ChoiceBox layoutX="307.0" layoutY="209.0" prefHeight="35.0" prefWidth="261.0" />
+        <ChoiceBox layoutX="307.0" layoutY="209.0" prefHeight="35.0" prefWidth="261.0"
+            fx:id="productInput" />
         <Button layoutX="667.0" layoutY="209.0" mnemonicParsing="false" prefHeight="35.0"
             prefWidth="78.0"
             style="-fx-background-color: #10b981; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 0, 0, 2, 2);"
-            text="Add" textFill="WHITE">
+            text="Add" textFill="WHITE"
+            onAction="#addToCart">
             <font>
                 <Font name="Segoe UI" size="18.0" />
             </font>
         </Button>
-        <TextField layoutX="581.0" layoutY="209.0" prefHeight="35.0" prefWidth="67.0" />
+        <TextField layoutX="581.0" layoutY="209.0" prefHeight="35.0" prefWidth="67.0"
+            fx:id="qtyInput" />
         <Label layoutX="581.0" layoutY="179.0" text="Qty" textFill="WHITE">
             <font>
                 <Font name="Segoe UI" size="14.0" />
             </font>
         </Label>
-        <TableView layoutX="307.0" layoutY="273.0" prefHeight="200.0" prefWidth="438.0">
-            <columns>
-                <TableColumn prefWidth="122.0" text="Product name" />
-                <TableColumn prefWidth="167.0" text="Qty" />
-            </columns>
-        </TableView>
+        <ScrollPane layoutX="308.0" layoutY="275.0" prefHeight="200.0" prefWidth="450.0"
+            fx:id="showArea">
+            <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="400.0" prefWidth="450.0" />
+            </content>
+        </ScrollPane>
     </children>
 </Pane>
