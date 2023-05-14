@@ -6,6 +6,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
@@ -67,87 +68,12 @@
                 <Font name="Segoe UI Bold" size="30.0" />
             </font>
         </Label>
-        <Pane layoutX="308.0" layoutY="161.0" prefHeight="389.0" prefWidth="435.0"
-            style="-fx-background-color: #ef4444; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 0, 0, 2, 2);">
-            <children>
-                <Label layoutX="29.0" layoutY="26.0" text="Customer: Jimmy" textFill="WHITE">
-                    <font>
-                        <Font name="Segoe UI Bold" size="24.0" />
-                    </font>
-                </Label>
-                <Label layoutX="29.0" layoutY="131.0" text="Status: Renting" textFill="WHITE">
-                    <font>
-                        <Font size="14.0" />
-                    </font>
-                </Label>
-                <Label layoutX="29.0" layoutY="75.0" text="Start date: 12 may 2023 08.00am"
-                    textFill="WHITE">
-                    <font>
-                        <Font name="Segoe UI" size="14.0" />
-                    </font>
-                </Label>
-                <Label layoutX="29.0" layoutY="165.0" text="Total: 100 GBP" textFill="WHITE">
-                    <font>
-                        <Font size="14.0" />
-                    </font>
-                </Label>
-                <Label layoutX="29.0" layoutY="103.0" prefHeight="20.0" prefWidth="242.0"
-                    text="Return date: 15 may 2023 10.00am" textFill="WHITE">
-                    <font>
-                        <Font size="14.0" />
-                    </font>
-                </Label>
-                <Label layoutX="30.0" layoutY="260.0" text="Detail" textFill="WHITE">
-                    <font>
-                        <Font name="Segoe UI Bold" size="24.0" />
-                    </font>
-                </Label>
-                <Label layoutX="30.0" layoutY="312.0" text="Mountain Bike" textFill="WHITE">
-                    <font>
-                        <Font size="14.0" />
-                    </font>
-                </Label>
-                <Label layoutX="150.0" layoutY="312.0" text="Qty:2" textFill="WHITE">
-                    <font>
-                        <Font size="14.0" />
-                    </font>
-                </Label>
-                <Label layoutX="233.0" layoutY="312.0" text="PPD: 10 GBP" textFill="WHITE">
-                    <font>
-                        <Font size="14.0" />
-                    </font>
-                </Label>
-                <Label layoutX="30.0" layoutY="195.0" text="Discount: 20 GBP" textFill="WHITE">
-                    <font>
-                        <Font size="14.0" />
-                    </font>
-                </Label>
-                <Label layoutX="30.0" layoutY="223.0" text="Last Price: 80 GBP" textFill="WHITE">
-                    <font>
-                        <Font size="14.0" />
-                    </font>
-                </Label>
-                <Label layoutX="29.0" layoutY="345.0" text="Kid Bike" textFill="WHITE">
-                    <font>
-                        <Font size="14.0" />
-                    </font>
-                </Label>
-                <Label layoutX="150.0" layoutY="345.0" text="Qty:1" textFill="WHITE">
-                    <font>
-                        <Font size="14.0" />
-                    </font>
-                </Label>
-                <Label layoutX="233.0" layoutY="345.0" text="PPD: 10 GBP" textFill="WHITE">
-                    <font>
-                        <Font size="14.0" />
-                    </font>
-                </Label>
-            </children>
-            <effect>
-                <DropShadow />
-            </effect>
-        </Pane>
-        <AnchorPane layoutX="-633.0" layoutY="188.0" minHeight="0.0" minWidth="0.0"
-            prefHeight="412.0" prefWidth="533.0" />
+
+        <ScrollPane layoutX="308.0" layoutY="179.0" prefHeight="400.0" prefWidth="450.0"
+            fx:id="showArea">
+            <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="400.0" prefWidth="450.0" />
+            </content>
+        </ScrollPane>
     </children>
 </Pane>
