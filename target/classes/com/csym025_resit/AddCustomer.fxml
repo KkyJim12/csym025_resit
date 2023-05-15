@@ -12,20 +12,19 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
     prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #3b82f6;"
-    xmlns="http://javafx.com/javafx
-" xmlns:fx="http://javafx.com/fxml/1"
+    xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
     fx:controller="com.csym025_resit.AddCustomerController">
     <children>
-        <TextField layoutX="307.0" layoutY="109.0" prefHeight="35.0" prefWidth="438.0"
-            promptText="Customer name" fx:id="fullNameInput">
+        <TextField fx:id="fullNameInput" layoutX="307.0" layoutY="109.0" prefHeight="35.0"
+            prefWidth="438.0" promptText="Customer name">
             <font>
                 <Font name="Segoe UI" size="18.0" />
             </font>
         </TextField>
-        <Button layoutX="301.0" layoutY="544.0" mnemonicParsing="false" prefHeight="35.0"
-            prefWidth="450.0"
+        <Button layoutX="301.0" layoutY="544.0" mnemonicParsing="false" onAction="#addCustomer"
+            prefHeight="35.0" prefWidth="450.0"
             style="-fx-background-color: #10b981; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 0, 0, 2, 2);"
-            text="Confirm" textFill="WHITE" onAction="#addCustomer">
+            text="Confirm" textFill="WHITE">
             <font>
                 <Font name="Segoe UI" size="18.0" />
             </font>
@@ -35,10 +34,10 @@
                 <Font name="Segoe UI Bold" size="24.0" />
             </font>
         </Label>
-        <Button layoutX="685.0" layoutY="39.0" mnemonicParsing="false"
+        <Button fx:id="backButton" layoutX="685.0" layoutY="39.0" mnemonicParsing="false"
             onAction="#switchToCustomerScene"
             style="-fx-background-color: #f59e0b; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 0, 0, 2, 2);"
-            text="Back" textFill="WHITE" fx:id="backButton">
+            text="Back" textFill="WHITE">
             <font>
                 <Font name="Segoe UI" size="18.0" />
             </font>
@@ -76,8 +75,8 @@
                 <Font name="Segoe UI" size="14.0" />
             </font>
         </Label>
-        <TextField layoutX="307.0" layoutY="200.0" prefHeight="35.0" prefWidth="438.0"
-            promptText="Email" fx:id="emailInput">
+        <TextField fx:id="emailInput" layoutX="307.0" layoutY="200.0" prefHeight="35.0"
+            prefWidth="438.0" promptText="Email">
             <font>
                 <Font name="Segoe UI" size="18.0" />
             </font>
@@ -87,8 +86,8 @@
                 <Font name="Segoe UI" size="14.0" />
             </font>
         </Label>
-        <TextField layoutX="307.0" layoutY="270.0" prefHeight="35.0" prefWidth="438.0"
-            promptText="Phone" fx:id="phoneInput">
+        <TextField fx:id="phoneInput" layoutX="307.0" layoutY="270.0" prefHeight="35.0"
+            prefWidth="438.0" promptText="Phone">
             <font>
                 <Font name="Segoe UI" size="18.0" />
             </font>
@@ -103,15 +102,40 @@
                 <Font name="Segoe UI" size="14.0" />
             </font>
         </Label>
-        <TextArea layoutX="307.0" layoutY="356.0" prefHeight="113.0" prefWidth="438.0"
-            fx:id="addressInput" />
+        <TextArea fx:id="addressInput" layoutX="307.0" layoutY="356.0" prefHeight="113.0"
+            prefWidth="438.0" />
 
         <fx:define>
             <ToggleGroup fx:id="group" />
         </fx:define>
-        <RadioButton layoutX="308.0" layoutY="501.0" mnemonicParsing="false" text="Male"
-            toggleGroup="$group" fx:id="genderMaleInput" />
-        <RadioButton layoutX="377.0" layoutY="501.0" mnemonicParsing="false" text="Female"
-            toggleGroup="$group" fx:id="genderFemaleInput" />
+        <RadioButton fx:id="genderMaleInput" layoutX="308.0" layoutY="501.0" mnemonicParsing="false"
+            text="Male">
+            <toggleGroup>
+                <ToggleGroup fx:id="group" />
+            </toggleGroup>
+        </RadioButton>
+        <RadioButton fx:id="genderFemaleInput" layoutX="377.0" layoutY="501.0"
+            mnemonicParsing="false" text="Female" toggleGroup="$group" />
+        <Label fx:id="addressInputError" layoutX="307.0" layoutY="476.0" text="" textFill="RED">
+            <font>
+                <Font name="Segoe UI" size="10.0" />
+            </font>
+        </Label>
+        <Label fx:id="phoneInputError" layoutX="307.0" layoutY="313.0" text="" textFill="RED">
+            <font>
+                <Font name="Segoe UI" size="10.0" />
+            </font>
+        </Label>
+        <Label fx:id="fullNameInputError" layoutX="307.0" layoutY="151.0" text="" textFill="RED">
+            <font>
+                <Font name="Segoe UI" size="10.0" />
+            </font>
+        </Label>
+        <Label fx:id="emailInputError" layoutX="307.0" layoutY="238.0" styleClass="emailInputError"
+            text="" textFill="RED">
+            <font>
+                <Font name="Segoe UI" size="10.0" />
+            </font>
+        </Label>
     </children>
 </Pane>

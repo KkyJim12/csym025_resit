@@ -18,6 +18,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -44,6 +45,17 @@ public class EditCustomerController {
     private RadioButton genderFemaleInput;
     @FXML
     private Button backButton;
+    @FXML
+    private Label fullNameInputError;
+
+    @FXML
+    private Label emailInputError;
+
+    @FXML
+    private Label phoneInputError;
+
+    @FXML
+    private Label addressInputError;
 
     public void initialize() throws ClassNotFoundException {
         getCustomer();
@@ -73,7 +85,64 @@ public class EditCustomerController {
         stage.show();
     }
 
+    public static boolean isNumeric(String strNum) {
+        if (strNum == null) {
+            return false;
+        }
+        try {
+            Double.parseDouble(strNum);
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+        return true;
+    }
+
+    public void resetValidate() throws IOException, ClassNotFoundException {
+        fullNameInputError.setText("");
+        emailInputError.setText("");
+        phoneInputError.setText("");
+        addressInputError.setText("");
+    }
+
+    public Boolean validateUpdateCustomer() throws IOException, ClassNotFoundException {
+
+        Boolean result = true;
+        // Check customer name
+        if (fullNameInput.getText().isEmpty()) {
+            fullNameInputError.setText("Please inform customer name.");
+            result = false;
+        }
+        // Check email
+        if (emailInput.getText().isEmpty()) {
+            emailInputError.setText("Please inform email.");
+            result = false;
+        }
+        // Check phone
+        if (!isNumeric(phoneInput.getText())) {
+            phoneInputError.setText("Please inform phone as number");
+            result = false;
+        }
+        if (phoneInput.getText().isEmpty()) {
+            phoneInputError.setText("Please inform phone.");
+            result = false;
+        }
+
+        // Check address
+        if (addressInput.getText().isEmpty()) {
+            addressInputError.setText("Please inform address.");
+            result = false;
+        }
+
+        return result;
+    }
+
     public void updateCustomer() throws IOException, ClassNotFoundException {
+
+        resetValidate();
+        if (validateUpdateCustomer() == false) {
+            return;
+        }
+
         String pathname = "src/main/java/com/csym025_resit/Serialization/Customer.ser";
         CustomerHolder holder = CustomerHolder.getInstance();
         String customerId = holder.getCustomer();

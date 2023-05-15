@@ -112,5 +112,26 @@
             toggleGroup="$group" fx:id="genderMaleInput" />
         <RadioButton layoutX="377.0" layoutY="501.0" mnemonicParsing="false" text="Female"
             toggleGroup="$group" fx:id="genderFemaleInput" />
+        <Label fx:id="addressInputError" layoutX="307.0" layoutY="476.0" text="" textFill="RED">
+            <font>
+                <Font name="Segoe UI" size="10.0" />
+            </font>
+        </Label>
+        <Label fx:id="phoneInputError" layoutX="307.0" layoutY="313.0" text="" textFill="RED">
+            <font>
+                <Font name="Segoe UI" size="10.0" />
+            </font>
+        </Label>
+        <Label fx:id="fullNameInputError" layoutX="307.0" layoutY="151.0" text="" textFill="RED">
+            <font>
+                <Font name="Segoe UI" size="10.0" />
+            </font>
+        </Label>
+        <Label fx:id="emailInputError" layoutX="307.0" layoutY="238.0" styleClass="emailInputError"
+            text="" textFill="RED">
+            <font>
+                <Font name="Segoe UI" size="10.0" />
+            </font>
+        </Label>
     </children>
 </Pane>
