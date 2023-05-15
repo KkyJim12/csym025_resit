@@ -51,6 +51,15 @@ public class AddRentingController {
     private ChoiceBox<String> productInput;
     @FXML
     private TextField qtyInput;
+
+    @FXML
+    private Label customerInputError;
+    @FXML
+    private Label productInputError;
+    @FXML
+    private Label qtyInputError;
+    @FXML
+    private Label cartInputError;
     @FXML
     private Button backButton;
 
@@ -101,7 +110,7 @@ public class AddRentingController {
             grid.setPadding(new Insets(5));
             grid.setVgap(10);
 
-            customerInput.getItems().add("Please select cuystomer");
+            customerInput.getItems().add("Please select customer");
             customerInput.setValue(null);
 
             for (int i = 0; i < customers.length; i++) {
@@ -139,7 +148,34 @@ public class AddRentingController {
         }
     }
 
+    public Boolean validateAddToCart() throws IOException, ClassNotFoundException {
+
+        Boolean result = true;
+        // Check product
+        if (productInput.getValue() == "Please select product") {
+            productInputError.setText("Please select product.");
+            result = false;
+        }
+        // Check qty
+        if (!isNumeric(qtyInput.getText())) {
+            qtyInputError.setText("Please inform qty as number");
+            result = false;
+        }
+        if (qtyInput.getText().isEmpty()) {
+            qtyInputError.setText("Please inform qty.");
+            result = false;
+        }
+
+        return result;
+    }
+
     public void addToCart() throws IOException, ClassNotFoundException, FileNotFoundException {
+
+        resetValidate();
+        if (validateAddToCart() == false) {
+            return;
+        }
+
         String selectedItem = productInput.getValue();
         int selectedItemQty = Integer.parseInt(qtyInput.getText());
 
@@ -262,7 +298,62 @@ public class AddRentingController {
         showArea.setPannable(true);
     }
 
+    public static boolean isNumeric(String strNum) {
+        if (strNum == null) {
+            return false;
+        }
+        try {
+            Double.parseDouble(strNum);
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+        return true;
+    }
+
+    public void resetValidate() throws IOException, ClassNotFoundException {
+        customerInputError.setText("");
+        productInputError.setText("");
+        qtyInputError.setText("");
+        cartInputError.setText("");
+    }
+
+    public Boolean validateAddInvoice() throws IOException, ClassNotFoundException {
+
+        Boolean result = true;
+        // Check customer name
+        if (customerInput.getValue() == "Please select customer") {
+            customerInputError.setText("Please select customer.");
+            result = false;
+        }
+        // Check product exist in cart
+        String pathname = "src/main/java/com/csym025_resit/Serialization/Cart.ser";
+        File f = new File(pathname);
+        if (f.exists()) {
+            Cart[] cart = null;
+            FileInputStream fileIn = new FileInputStream(pathname);
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+            cart = (Cart[]) in.readObject();
+            in.close();
+            fileIn.close();
+            if (cart.length == 0) {
+                cartInputError.setText("Please select at least 1 product.");
+                result = false;
+            }
+        } else {
+            cartInputError.setText("Please select at least 1 product.");
+            result = false;
+        }
+
+        return result;
+    }
+
     public void addInvoice() throws IOException, ClassNotFoundException, FileNotFoundException {
+
+        resetValidate();
+        if (validateAddInvoice() == false) {
+            return;
+        }
+
         int totalPrice = 0;
         int lastPrice = 0;
         Cart[] cart = null;

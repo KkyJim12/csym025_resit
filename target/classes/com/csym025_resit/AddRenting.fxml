@@ -12,7 +12,7 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #3b82f6;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.csym025_resit.AddRentingController">
     <children>
-        <Button onAction="#addInvoice" layoutX="308.0" layoutY="516.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="450.0" style="-fx-background-color: #10b981; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 0, 0, 2, 2);" text="Confirm" textFill="WHITE">
+        <Button layoutX="308.0" layoutY="516.0" mnemonicParsing="false" onAction="#addInvoice" prefHeight="35.0" prefWidth="450.0" style="-fx-background-color: #10b981; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 0, 0, 2, 2);" text="Confirm" textFill="WHITE">
             <font>
                 <Font name="Segoe UI" size="18.0" />
             </font>
@@ -22,7 +22,7 @@
                 <Font name="Segoe UI Bold" size="24.0" />
             </font>
         </Label>
-        <Button layoutX="685.0" layoutY="39.0" mnemonicParsing="false" onAction="#switchToRentScene" style="-fx-background-color: #f59e0b; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 0, 0, 2, 2);" text="Back" textFill="WHITE" fx:id="backButton">
+        <Button fx:id="backButton" layoutX="685.0" layoutY="39.0" mnemonicParsing="false" onAction="#switchToRentScene" style="-fx-background-color: #f59e0b; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 0, 0, 2, 2);" text="Back" textFill="WHITE">
             <font>
                 <Font name="Segoe UI" size="18.0" />
             </font>
@@ -81,5 +81,25 @@
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="150.0" prefWidth="450.0" />
             </content>
         </ScrollPane>
+      <Label fx:id="customerInputError" layoutX="307.0" layoutY="155.0" text="" textFill="RED">
+         <font>
+            <Font name="Segoe UI" size="10.0" />
+         </font>
+      </Label>
+      <Label fx:id="productInputError" layoutX="307.0" layoutY="253.0" text="" textFill="RED">
+         <font>
+            <Font name="Segoe UI" size="10.0" />
+         </font>
+      </Label>
+      <Label fx:id="qtyInputError" layoutX="583.0" layoutY="253.0" text="" textFill="RED">
+         <font>
+            <Font name="Segoe UI" size="10.0" />
+         </font>
+      </Label>
+      <Label fx:id="cartInputError" layoutX="307.0" layoutY="464.0" text="" textFill="RED">
+         <font>
+            <Font name="Segoe UI" size="10.0" />
+         </font>
+      </Label>
     </children>
 </Pane>
