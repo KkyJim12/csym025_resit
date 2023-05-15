@@ -98,6 +98,7 @@ public class AddRentingController {
 
         String pathname = "src/main/java/com/csym025_resit/Serialization/Customer.ser";
         File f = new File(pathname);
+        customerInput.getItems().add("Please select customer");
         if (f.exists()) {
             Customer[] customers = null;
             FileInputStream fileIn = new FileInputStream(pathname);
@@ -110,22 +111,20 @@ public class AddRentingController {
             grid.setPadding(new Insets(5));
             grid.setVgap(10);
 
-            customerInput.getItems().add("Please select customer");
-            customerInput.setValue(null);
-
             for (int i = 0; i < customers.length; i++) {
                 customerInput.getItems().add(customers[i].fullName);
                 customerInput.setValue(customers[i].fullName);
             }
 
-            customerInput.getSelectionModel().select(0);
         }
+        customerInput.getSelectionModel().select(0);
     }
 
     public void getAllStocks() throws IOException, ClassNotFoundException, FileNotFoundException {
 
         String pathname = "src/main/java/com/csym025_resit/Serialization/Stock.ser";
         File f = new File(pathname);
+        productInput.getItems().add("Please select product");
         if (f.exists()) {
             Stock[] stocks = null;
             FileInputStream fileIn = new FileInputStream(pathname);
@@ -138,14 +137,11 @@ public class AddRentingController {
             grid.setPadding(new Insets(5));
             grid.setVgap(10);
 
-            productInput.getItems().add("Please select product");
-            productInput.setValue(null);
-
             for (int i = 0; i < stocks.length; i++) {
                 productInput.getItems().add(stocks[i].productName);
             }
-            productInput.getSelectionModel().select(0);
         }
+        productInput.getSelectionModel().select(0);
     }
 
     public Boolean validateAddToCart() throws IOException, ClassNotFoundException {
