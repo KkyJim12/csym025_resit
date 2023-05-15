@@ -18,6 +18,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -31,6 +32,15 @@ public class AddStockController {
     private TextField quantityInput;
     @FXML
     private TextField pricePerDayInput;
+
+    @FXML
+    private Label productNameInputError;
+    @FXML
+    private Label categoryInputError;
+    @FXML
+    private Label quantityInputError;
+    @FXML
+    private Label pricePerDayInputError;
     @FXML
     private Button backButton;
 
@@ -62,7 +72,67 @@ public class AddStockController {
         stage.show();
     }
 
+    public static boolean isNumeric(String strNum) {
+        if (strNum == null) {
+            return false;
+        }
+        try {
+            double d = Double.parseDouble(strNum);
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+        return true;
+    }
+
+    public void resetValidate() throws IOException, ClassNotFoundException {
+        productNameInputError.setText("");
+        categoryInputError.setText("");
+        pricePerDayInputError.setText("");
+        quantityInputError.setText("");
+    }
+
+    public Boolean validateAddStock() throws IOException, ClassNotFoundException {
+
+        Boolean result = true;
+        // Check product name
+        if (productNameInput.getText().isEmpty()) {
+            productNameInputError.setText("Please inform product name.");
+            result = false;
+        }
+        // Check category
+        if (categoryInput.getText().isEmpty()) {
+            categoryInputError.setText("Please inform category.");
+            result = false;
+        }
+        // Check quantity
+        if (!isNumeric(quantityInput.getText())) {
+            quantityInputError.setText("Quantity must be a number.");
+            result = false;
+        }
+        if (quantityInput.getText().isEmpty()) {
+            quantityInputError.setText("Please inform quantity.");
+            result = false;
+        }
+
+        // Check price per day
+        if (!isNumeric(pricePerDayInput.getText())) {
+            pricePerDayInputError.setText("Price per day must be a number.");
+            result = false;
+        }
+        if (pricePerDayInput.getText().isEmpty()) {
+            pricePerDayInputError.setText("Please inform price per day.");
+            result = false;
+        }
+
+        return result;
+    }
+
     public void addStock() throws IOException, ClassNotFoundException {
+        resetValidate();
+        if (validateAddStock() == false) {
+            return;
+        }
+
         Stock stock = new Stock();
         String pathname = "src/main/java/com/csym025_resit/Serialization/Stock.ser";
         stock.id = UUID.randomUUID().toString();
