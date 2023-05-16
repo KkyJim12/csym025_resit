@@ -14,6 +14,7 @@ import java.util.Arrays;
 
 import com.csym025_resit.Holder.InvoiceHolder;
 import com.csym025_resit.Model.Invoice;
+import com.csym025_resit.Model.Stock;
 
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -279,7 +280,6 @@ public class RentController {
                 InvoiceHolder holder2 = InvoiceHolder.getInstance();
                 String invoiceId = holder2.getInvoice();
 
-
                 File f = new File(pathname);
                 if (f.exists()) {
                     Invoice invoice = null;
@@ -296,7 +296,47 @@ public class RentController {
                         if ((invoices[i].id).equals(invoiceId)) {
                             invoice = invoices[i];
                             index = i;
-                            break;
+
+                            // Return stock
+                            for (int k = 0; k < invoices[i].cart.length; k++) {
+                                String pathname2 = "src/main/java/com/csym025_resit/Serialization/Stock.ser";
+
+                                File f2 = new File(pathname2);
+                                if (f2.exists()) {
+                                    Stock stock = null;
+                                    Stock[] stocks = null;
+                                    FileInputStream fileIn2 = new FileInputStream(pathname2);
+                                    ObjectInputStream in2 = new ObjectInputStream(fileIn2);
+                                    stocks = (Stock[]) in2.readObject();
+                                    in2.close();
+                                    fileIn2.close();
+
+                                    int index2 = 0;
+
+                                    for (int j = 0; j < stocks.length; j++) {
+                                        if ((stocks[j].productName).equals(invoices[i].cart[k].productName)) {
+                                            stock = stocks[j];
+                                            index2 = j;
+                                            break;
+                                        }
+                                    }
+
+                                    stock.productName = stocks[index2].productName;
+                                    stock.category = stocks[index2].category;
+                                    stock.quantity = stocks[index2].quantity + invoices[i].cart[k].quantity;
+                                    stock.pricePerDay = stocks[index2].pricePerDay;
+
+                                    Stock[] newStocks = Arrays.copyOf(stocks, stocks.length);
+                                    newStocks[index2] = stock;
+
+                                    FileOutputStream fileOut2 = new FileOutputStream(pathname2);
+                                    ObjectOutputStream out2 = new ObjectOutputStream(fileOut2);
+                                    out2.writeObject(newStocks);
+                                    out2.close();
+                                    fileOut2.close();
+                                }
+
+                            }
                         }
                     }
 

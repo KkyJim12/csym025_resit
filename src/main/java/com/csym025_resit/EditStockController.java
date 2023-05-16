@@ -143,7 +143,6 @@ public class EditStockController {
         StockHolder holder = StockHolder.getInstance();
         String stockId = holder.getStock();
 
-        System.out.println(stockId);
 
         File f = new File(pathname);
         if (f.exists()) {

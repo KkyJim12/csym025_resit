@@ -188,6 +188,13 @@ public class AddRentingController {
 
             for (int i = 0; i < stocks.length; i++) {
                 if (selectedItem.equals(stocks[i].productName)) {
+
+                    // Check avaiable stock
+                    if (selectedItemQty > stocks[i].quantity) {
+                        qtyInputError.setText("Not enough stock for this product.");
+                        return;
+                    }
+
                     cart.productName = stocks[i].productName;
                     cart.category = stocks[i].category;
                     cart.quantity = selectedItemQty;
@@ -206,6 +213,14 @@ public class AddRentingController {
             carts = (Cart[]) in.readObject();
             in.close();
             fileIn.close();
+
+            // Check if already add
+            for (int j = 0; j < carts.length; j++) {
+                if (carts[j].productName.equals(selectedItem)) {
+                    productInputError.setText("You have already add this product.");
+                    return;
+                }
+            }
 
             Cart[] newCart = Arrays.copyOf(carts, carts.length + 1);
             newCart[carts.length] = cart;
@@ -354,58 +369,92 @@ public class AddRentingController {
         int lastPrice = 0;
         Cart[] cart = null;
 
-        String pathname = "src/main/java/com/csym025_resit/Serialization/Cart.ser";
-        File f = new File(pathname);
-        if (f.exists()) {
-            FileInputStream fileIn = new FileInputStream(pathname);
-            ObjectInputStream in = new ObjectInputStream(fileIn);
-            cart = (Cart[]) in.readObject();
-            in.close();
-            fileIn.close();
-
-            for (int i = 0; i < cart.length; i++) {
-                totalPrice += cart[i].pricePerDay * cart[i].quantity;
-            }
-
-            System.out.println(totalPrice);
-        }
-
-        Invoice invoice = new Invoice();
-        String pathname1 = "src/main/java/com/csym025_resit/Serialization/Invoice.ser";
-        invoice.id = UUID.randomUUID().toString();
-        invoice.customerName = customerInput.getValue();
-        invoice.cart = cart;
-        invoice.totalPrice = totalPrice;
-        invoice.lastPrice = lastPrice;
-        invoice.rentDate = LocalDateTime.now();
-        invoice.returnDate = null;
-
+        String pathname1 = "src/main/java/com/csym025_resit/Serialization/Cart.ser";
         File f1 = new File(pathname1);
         if (f1.exists()) {
-            Invoice[] invoices = null;
-            FileInputStream fileIn = new FileInputStream(pathname1);
-            ObjectInputStream in = new ObjectInputStream(fileIn);
-            invoices = (Invoice[]) in.readObject();
-            in.close();
-            fileIn.close();
+            FileInputStream fileIn1 = new FileInputStream(pathname1);
+            ObjectInputStream in1 = new ObjectInputStream(fileIn1);
+            cart = (Cart[]) in1.readObject();
+            in1.close();
+            fileIn1.close();
 
-            Invoice[] newInvoices = Arrays.copyOf(invoices, invoices.length + 1);
-            newInvoices[invoices.length] = invoice;
+            // Find total price and deduct quantity
+            for (int i = 0; i < cart.length; i++) {
+                totalPrice += cart[i].pricePerDay * cart[i].quantity;
 
-            FileOutputStream fileOut = new FileOutputStream(pathname1);
-            ObjectOutputStream out = new ObjectOutputStream(fileOut);
-            out.writeObject(newInvoices);
-            out.close();
-            fileOut.close();
-        } else {
-            FileOutputStream fileOut = new FileOutputStream(pathname1);
-            ObjectOutputStream out = new ObjectOutputStream(fileOut);
-            out.writeObject(new Invoice[] { invoice });
-            out.close();
-            fileOut.close();
+                // Deduct quantity
+                String pathname2 = "src/main/java/com/csym025_resit/Serialization/Stock.ser";
+                File f2 = new File(pathname2);
+                if (f2.exists()) {
+                    Stock stock = null;
+                    Stock[] stocks = null;
+                    FileInputStream fileIn2 = new FileInputStream(pathname2);
+                    ObjectInputStream in2 = new ObjectInputStream(fileIn2);
+                    stocks = (Stock[]) in2.readObject();
+                    in2.close();
+                    fileIn2.close();
+
+                    for (int j = 0; j < stocks.length; j++) {
+                        if ((stocks[j].productName).equals(cart[i].productName)) {
+                            String pathname3 = "src/main/java/com/csym025_resit/Serialization/Stock.ser";
+                            stock = stocks[j];
+                            stock.productName = stocks[j].productName;
+                            stock.category = stocks[j].category;
+                            stock.quantity = stocks[j].quantity - cart[i].quantity;
+                            stock.pricePerDay = stocks[j].pricePerDay;
+
+                            Stock[] newStocks = Arrays.copyOf(stocks, stocks.length);
+                            newStocks[j] = stock;
+
+                            FileOutputStream fileOut3 = new FileOutputStream(pathname3);
+                            ObjectOutputStream out3 = new ObjectOutputStream(fileOut3);
+                            out3.writeObject(newStocks);
+                            out3.close();
+                            fileOut3.close();
+                            break;
+                        }
+                    }
+
+                }
+            }
+
+            Invoice invoice = new Invoice();
+            String pathname4 = "src/main/java/com/csym025_resit/Serialization/Invoice.ser";
+            invoice.id = UUID.randomUUID().toString();
+            invoice.customerName = customerInput.getValue();
+            invoice.cart = cart;
+            invoice.totalPrice = totalPrice;
+            invoice.lastPrice = lastPrice;
+            invoice.rentDate = LocalDateTime.now();
+            invoice.returnDate = null;
+
+            File f4 = new File(pathname4);
+            if (f4.exists()) {
+                Invoice[] invoices = null;
+                FileInputStream fileIn4 = new FileInputStream(pathname4);
+                ObjectInputStream in4 = new ObjectInputStream(fileIn4);
+                invoices = (Invoice[]) in4.readObject();
+                in4.close();
+                fileIn4.close();
+
+                Invoice[] newInvoices = Arrays.copyOf(invoices, invoices.length + 1);
+                newInvoices[invoices.length] = invoice;
+
+                FileOutputStream fileOut4 = new FileOutputStream(pathname4);
+                ObjectOutputStream out4 = new ObjectOutputStream(fileOut4);
+                out4.writeObject(newInvoices);
+                out4.close();
+                fileOut4.close();
+            } else {
+                FileOutputStream fileOut4 = new FileOutputStream(pathname4);
+                ObjectOutputStream out4 = new ObjectOutputStream(fileOut4);
+                out4.writeObject(new Invoice[] { invoice });
+                out4.close();
+                fileOut4.close();
+            }
+
+            backButton.fire();
         }
 
-        backButton.fire();
     }
-
 }
