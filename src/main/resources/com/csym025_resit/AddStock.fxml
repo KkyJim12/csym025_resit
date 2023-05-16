@@ -18,7 +18,7 @@
                 <Font name="Segoe UI" size="18.0" />
             </font>
         </TextField>
-        <Button layoutX="301.0" layoutY="451.0" mnemonicParsing="false" onAction="#addStock"
+        <Button id="confirmButton" fx:id="confirmButton" layoutX="301.0" layoutY="451.0" mnemonicParsing="false" onAction="#addStock"
             prefHeight="35.0" prefWidth="450.0"
             style="-fx-background-color: #10b981; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 0, 0, 2, 2);"
             text="Confirm" textFill="WHITE">
@@ -67,7 +67,7 @@
                 <Font name="Segoe UI Bold" size="30.0" />
             </font>
         </Label>
-        <Label layoutX="308.0" layoutY="107.0" text="Product name" textFill="WHITE">
+        <Label id="productNameLabel" layoutX="308.0" layoutY="107.0" text="Product name" textFill="WHITE">
             <font>
                 <Font name="Segoe UI" size="14.0" />
             </font>
