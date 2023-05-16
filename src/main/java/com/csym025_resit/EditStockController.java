@@ -143,7 +143,6 @@ public class EditStockController {
         StockHolder holder = StockHolder.getInstance();
         String stockId = holder.getStock();
 
-
         File f = new File(pathname);
         if (f.exists()) {
             Stock stock = null;
@@ -161,6 +160,14 @@ public class EditStockController {
                     stock = stocks[i];
                     index = i;
                     break;
+                }
+            }
+
+            // Check if same product name
+            for (int j = 0; j < stocks.length; j++) {
+                if (stocks[j].productName.equals(productNameInput.getText()) && j != index) {
+                    productNameInputError.setText("This product name has already used.");
+                    return;
                 }
             }
 

@@ -150,6 +150,14 @@ public class AddStockController {
             in.close();
             fileIn.close();
 
+            // Check if same product name
+            for (int i = 0; i < stocks.length; i++) {
+                if (stocks[i].productName.equals(productNameInput.getText())) {
+                    productNameInputError.setText("This product name has already used.");
+                    return;
+                }
+            }
+
             Stock[] newStocks = Arrays.copyOf(stocks, stocks.length + 1);
             newStocks[stocks.length] = stock;
 
