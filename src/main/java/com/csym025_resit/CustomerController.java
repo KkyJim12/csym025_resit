@@ -160,6 +160,7 @@ public class CustomerController {
                     customerCard.setPrefSize(425, 150);
                     customerCard.setPadding(new Insets(10, 20, 10, 20));
                     customerCard.setStyle("-fx-background-color:#ef4444");
+                    customerCard.setId("customerCard");
 
                     grid.add(customerCard, 1, i);
                 }
@@ -212,6 +213,7 @@ public class CustomerController {
                 deleteButton.setStyle("-fx-font-size:15; -fx-font-family: Segoe UI; -fx-background-color:#f97316");
                 deleteButton.setTextFill(Color.color(1, 1, 1));
                 deleteButton.setId(customers[i].id);
+                deleteButton.getStyleClass().add("deleteButton");
                 deleteButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new deleteCustomer());
                 HBox manageSection = new HBox(editButton, deleteButton);
                 manageSection.setSpacing(10);
@@ -227,6 +229,7 @@ public class CustomerController {
                 customerCard.setPrefSize(425, 150);
                 customerCard.setPadding(new Insets(10, 20, 10, 20));
                 customerCard.setStyle("-fx-background-color:#ef4444");
+                customerCard.setId("customerCard");
 
                 grid.add(customerCard, 1, i);
             }

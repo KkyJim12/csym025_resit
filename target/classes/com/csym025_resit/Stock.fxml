@@ -50,7 +50,7 @@
             <Font name="Segoe UI" size="18.0" />
          </font>
       </Button>
-      <Button fx:id="customerLinkButton" layoutX="38.0" layoutY="144.0" mnemonicParsing="false"
+      <Button id="customerLinkButton" fx:id="customerLinkButton" layoutX="38.0" layoutY="144.0" mnemonicParsing="false"
          onAction="#switchToCustomerScene"
          style="-fx-background-color: #06b6d4; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 0, 0, 2, 2);"
          text="Customer" textFill="WHITE">

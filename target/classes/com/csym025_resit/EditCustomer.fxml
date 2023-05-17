@@ -25,7 +25,7 @@
         <Button layoutX="301.0" layoutY="544.0" mnemonicParsing="false" prefHeight="35.0"
             prefWidth="450.0"
             style="-fx-background-color: #10b981; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 0, 0, 2, 2);"
-            text="Confirm" textFill="WHITE" onAction="#updateCustomer" fx:id="updateButton">
+            text="Confirm" textFill="WHITE" onAction="#updateCustomer" fx:id="updateButton" id="updateCustomerButton">
             <font>
                 <Font name="Segoe UI" size="18.0" />
             </font>

@@ -11,12 +11,12 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #3b82f6;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.csym025_resit.CustomerController">
    <children>
-      <TextField fx:id="searchInput" layoutX="308.0" layoutY="104.0" prefHeight="35.0" prefWidth="377.0" promptText="Type something...">
+      <TextField id="searchInput" fx:id="searchInput" layoutX="308.0" layoutY="104.0" prefHeight="35.0" prefWidth="377.0" promptText="Type something...">
          <font>
             <Font name="Segoe UI" size="18.0" />
          </font>
       </TextField>
-      <Button layoutX="671.0" layoutY="103.0" mnemonicParsing="false" onAction="#search" style="-fx-background-color: #10b981; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 0, 0, 2, 2);" text="Search" textFill="WHITE">
+      <Button id="searchButton" layoutX="671.0" layoutY="103.0" mnemonicParsing="false" onAction="#search" style="-fx-background-color: #10b981; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 0, 0, 2, 2);" text="Search" textFill="WHITE">
          <font>
             <Font name="Segoe UI" size="18.0" />
          </font>
@@ -26,7 +26,7 @@
             <Font name="Segoe UI Bold" size="24.0" />
          </font>
       </Label>
-      <Button layoutX="616.0" layoutY="39.0" mnemonicParsing="false" onAction="#switchToAddCustomerScene" style="-fx-background-color: #22c55e; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 0, 0, 2, 2);" text="Add Customer" textFill="WHITE">
+      <Button id="addCustomerButton" layoutX="616.0" layoutY="39.0" mnemonicParsing="false" onAction="#switchToAddCustomerScene" style="-fx-background-color: #22c55e; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 0, 0, 2, 2);" text="Add Customer" textFill="WHITE">
          <font>
             <Font name="Segoe UI" size="18.0" />
          </font>

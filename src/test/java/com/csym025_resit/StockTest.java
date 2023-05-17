@@ -5,7 +5,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -14,7 +13,6 @@ import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.testfx.api.FxRobot;
 import org.testfx.assertions.api.Assertions;
 import org.testfx.framework.junit5.ApplicationTest;
-import org.testfx.framework.junit5.Start;
 
 import com.csym025_resit.Model.Stock;
 
@@ -115,7 +113,7 @@ class StockTest {
         robot.type(KeyCode.BACK_SPACE, 3);
         robot.write("Samsung");
         robot.clickOn("#searchButton");
-        Assertions.assertThat(robot.lookup("#showArea").queryAs(ScrollPane.class)).hasAnyChild();
+        Assertions.assertThat(robot.lookup("#showArea").queryAs(ScrollPane.class)).hasExactlyChildren(1, "#stockCard");
     }
 
     // 5. Test delete stock

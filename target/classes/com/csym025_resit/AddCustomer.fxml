@@ -15,13 +15,13 @@
     xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
     fx:controller="com.csym025_resit.AddCustomerController">
     <children>
-        <TextField fx:id="fullNameInput" layoutX="307.0" layoutY="109.0" prefHeight="35.0"
+        <TextField id="fullNameInput" fx:id="fullNameInput" layoutX="307.0" layoutY="109.0" prefHeight="35.0"
             prefWidth="438.0" promptText="Customer name">
             <font>
                 <Font name="Segoe UI" size="18.0" />
             </font>
         </TextField>
-        <Button layoutX="301.0" layoutY="544.0" mnemonicParsing="false" onAction="#addCustomer"
+        <Button id="confirmButton" layoutX="301.0" layoutY="544.0" mnemonicParsing="false" onAction="#addCustomer"
             prefHeight="35.0" prefWidth="450.0"
             style="-fx-background-color: #10b981; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 0, 0, 2, 2);"
             text="Confirm" textFill="WHITE">
@@ -75,7 +75,7 @@
                 <Font name="Segoe UI" size="14.0" />
             </font>
         </Label>
-        <TextField fx:id="emailInput" layoutX="307.0" layoutY="200.0" prefHeight="35.0"
+        <TextField id="emailInput" fx:id="emailInput" layoutX="307.0" layoutY="200.0" prefHeight="35.0"
             prefWidth="438.0" promptText="Email">
             <font>
                 <Font name="Segoe UI" size="18.0" />
@@ -86,7 +86,7 @@
                 <Font name="Segoe UI" size="14.0" />
             </font>
         </Label>
-        <TextField fx:id="phoneInput" layoutX="307.0" layoutY="270.0" prefHeight="35.0"
+        <TextField id="phoneInput" fx:id="phoneInput" layoutX="307.0" layoutY="270.0" prefHeight="35.0"
             prefWidth="438.0" promptText="Phone">
             <font>
                 <Font name="Segoe UI" size="18.0" />
@@ -102,7 +102,7 @@
                 <Font name="Segoe UI" size="14.0" />
             </font>
         </Label>
-        <TextArea fx:id="addressInput" layoutX="307.0" layoutY="356.0" prefHeight="113.0"
+        <TextArea id="addressInput" fx:id="addressInput" layoutX="307.0" layoutY="356.0" prefHeight="113.0"
             prefWidth="438.0" />
 
         <fx:define>
