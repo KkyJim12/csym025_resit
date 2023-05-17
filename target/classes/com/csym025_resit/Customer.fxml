@@ -32,17 +32,17 @@
          </font>
       </Button>
       <Accordion layoutX="133.0" layoutY="161.0" />
-      <Button layoutX="38.0" layoutY="86.0" mnemonicParsing="false" onAction="#switchToStockScene" style="-fx-background-color: #06b6d4; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 0, 0, 2, 2);" text="Stock" textFill="WHITE">
+      <Button id="stockLinkButton" layoutX="38.0" layoutY="86.0" mnemonicParsing="false" onAction="#switchToStockScene" style="-fx-background-color: #06b6d4; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 0, 0, 2, 2);" text="Stock" textFill="WHITE">
          <font>
             <Font name="Segoe UI" size="18.0" />
          </font>
       </Button>
-      <Button fx:id="customerLinkButton" layoutX="38.0" layoutY="144.0" mnemonicParsing="false" onAction="#switchToCustomerScene" style="-fx-background-color: #06b6d4; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 0, 0, 2, 2);" text="Customer" textFill="WHITE">
+      <Button id="customerLinkButton" fx:id="customerLinkButton" layoutX="38.0" layoutY="144.0" mnemonicParsing="false" onAction="#switchToCustomerScene" style="-fx-background-color: #06b6d4; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 0, 0, 2, 2);" text="Customer" textFill="WHITE">
          <font>
             <Font name="Segoe UI" size="18.0" />
          </font>
       </Button>
-      <Button layoutX="38.0" layoutY="200.0" mnemonicParsing="false" onAction="#switchToRentScene" style="-fx-background-color: #06b6d4; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 0, 0, 2, 2);" text="Rent" textFill="WHITE">
+      <Button  id="rentingLinkButton" layoutX="38.0" layoutY="200.0" mnemonicParsing="false" onAction="#switchToRentScene" style="-fx-background-color: #06b6d4; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 0, 0, 2, 2);" text="Rent" textFill="WHITE">
          <font>
             <Font name="Segoe UI" size="18.0" />
          </font>
