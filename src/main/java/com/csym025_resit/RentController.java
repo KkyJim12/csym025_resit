@@ -163,6 +163,7 @@ public class RentController {
 
                     invoiceCard.setPrefSize(425, 150);
                     invoiceCard.setPadding(new Insets(10, 20, 10, 20));
+                    invoiceCard.setId("invoiceCard");
 
                     if (invoices[i].returnDate != null) {
                         invoiceCard.setStyle("-fx-background-color:#22c55e");

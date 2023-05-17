@@ -15,13 +15,13 @@
     xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1"
     fx:controller="com.csym025_resit.RentController">
     <children>
-        <TextField layoutX="308.0" layoutY="104.0" prefHeight="35.0" prefWidth="377.0"
+        <TextField id="searchInput" layoutX="308.0" layoutY="104.0" prefHeight="35.0" prefWidth="377.0"
             promptText="Search invoice by customer name..." fx:id="searchInput">
             <font>
                 <Font name="Segoe UI" size="18.0" />
             </font>
         </TextField>
-        <Button layoutX="671.0" layoutY="103.0" mnemonicParsing="false"
+        <Button id="searchButton" layoutX="671.0" layoutY="103.0" mnemonicParsing="false"
             style="-fx-background-color: #10b981; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 0, 0, 2, 2);"
             text="Search" textFill="WHITE" onAction="#search">
             <font>

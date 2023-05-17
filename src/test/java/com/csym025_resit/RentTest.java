@@ -5,11 +5,11 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.api.TestInstance.Lifecycle;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.testfx.api.FxRobot;
 import org.testfx.assertions.api.Assertions;
 import org.testfx.framework.junit5.ApplicationTest;
@@ -21,7 +21,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 
-@TestInstance(Lifecycle.PER_CLASS)
+@TestMethodOrder(OrderAnnotation.class)
 class RentTest {
 
     public Invoice[] openInvoiceSer() throws IOException, ClassNotFoundException {
@@ -39,12 +39,15 @@ class RentTest {
         return invoices;
     }
 
-    @BeforeAll
+    @BeforeEach
     protected void setUp() throws Exception {
-        resetAllSer();
         ApplicationTest.launch(Main.class);
+        FxRobot robot = new FxRobot();
+        robot.clickOn("#rentLinkButton");
     }
 
+    @Test
+    @Order(1)
     public void resetAllSer() throws IOException, ClassNotFoundException {
         String pathname = "src/main/java/com/csym025_resit/Serialization/Stock.ser";
         File f = new File(pathname);
@@ -60,9 +63,10 @@ class RentTest {
     }
 
     @Test
-    @Order(1)
+    @Order(2)
     void TestAddCustomerAndStock() throws IOException, ClassNotFoundException {
         FxRobot robot = new FxRobot();
+        robot.clickOn("#stockLinkButton");
         robot.clickOn("#addStockButton");
         robot.clickOn("#productNameInput");
         robot.write("Iphone 14 pro max");
@@ -88,11 +92,10 @@ class RentTest {
     }
 
     @Test
-    @Order(2)
+    @Order(3)
     void TestAddRenting() throws IOException, ClassNotFoundException, InterruptedException {
 
         FxRobot robot = new FxRobot();
-        robot.clickOn("#rentingLinkButton");
         robot.clickOn("#addRentingButton");
         robot.clickOn("#customerInput");
         robot.press(KeyCode.DOWN);
@@ -110,7 +113,7 @@ class RentTest {
     }
 
     @Test
-    @Order(3)
+    @Order(4)
     void TestAcceptReturn() throws IOException, ClassNotFoundException, InterruptedException {
 
         Invoice[] invoices = openInvoiceSer();
@@ -122,6 +125,24 @@ class RentTest {
 
         invoices = openInvoiceSer();
         Assertions.assertThat(invoices[0].returnDate).isNotNull();
+    }
+
+    @Test
+    @Order(5)
+    void TestSearchInvoice() throws IOException, ClassNotFoundException {
+        FxRobot robot = new FxRobot();
+        robot.clickOn("#searchInput");
+        robot.write("abc");
+        robot.clickOn("#searchButton");
+        Assertions.assertThat(robot.lookup("#showArea").queryAs(ScrollPane.class)).hasExactlyChildren(0,
+                "#invoiceCard");
+
+        robot.clickOn("#searchInput");
+        robot.type(KeyCode.BACK_SPACE, 3);
+        robot.write("Piyakarn");
+        robot.clickOn("#searchButton");
+        Assertions.assertThat(robot.lookup("#showArea").queryAs(ScrollPane.class)).hasExactlyChildren(1,
+                "#invoiceCard");
     }
 
 }
