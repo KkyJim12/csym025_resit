@@ -12,7 +12,7 @@
     xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
     fx:controller="com.csym025_resit.AddStockController">
     <children>
-        <TextField fx:id="productNameInput" layoutX="307.0" layoutY="135.0" prefHeight="35.0"
+        <TextField id="productNameInput" fx:id="productNameInput" layoutX="307.0" layoutY="135.0" prefHeight="35.0"
             prefWidth="438.0" promptText="Product name">
             <font>
                 <Font name="Segoe UI" size="18.0" />
@@ -67,12 +67,12 @@
                 <Font name="Segoe UI Bold" size="30.0" />
             </font>
         </Label>
-        <Label id="productNameLabel" layoutX="308.0" layoutY="107.0" text="Product name" textFill="WHITE">
+        <Label layoutX="308.0" layoutY="107.0" text="Product name" textFill="WHITE">
             <font>
                 <Font name="Segoe UI" size="14.0" />
             </font>
         </Label>
-        <TextField fx:id="categoryInput" layoutX="307.0" layoutY="214.0" prefHeight="35.0"
+        <TextField id="categoryInput" fx:id="categoryInput" layoutX="307.0" layoutY="214.0" prefHeight="35.0"
             prefWidth="438.0" promptText="Category">
             <font>
                 <Font name="Segoe UI" size="18.0" />
@@ -83,7 +83,7 @@
                 <Font name="Segoe UI" size="14.0" />
             </font>
         </Label>
-        <TextField fx:id="pricePerDayInput" layoutX="307.0" layoutY="297.0" prefHeight="35.0"
+        <TextField id="pricePerDayInput" fx:id="pricePerDayInput" layoutX="307.0" layoutY="297.0" prefHeight="35.0"
             prefWidth="438.0" promptText="Price per day">
             <font>
                 <Font name="Segoe UI" size="18.0" />
@@ -94,7 +94,7 @@
                 <Font name="Segoe UI" size="14.0" />
             </font>
         </Label>
-        <TextField fx:id="quantityInput" layoutX="307.0" layoutY="379.0" prefHeight="35.0"
+        <TextField id="quantityInput" fx:id="quantityInput" layoutX="307.0" layoutY="379.0" prefHeight="35.0"
             prefWidth="438.0" promptText="Quantity">
             <font>
                 <Font name="Segoe UI" size="18.0" />

@@ -15,14 +15,14 @@
    fx:controller="com.csym025_resit.StockController">
    <children>
       <TextField layoutX="308.0" layoutY="104.0" prefHeight="35.0" prefWidth="377.0"
-         promptText="Type something..." fx:id="searchInput">
+         promptText="Type something..." fx:id="searchInput" id="searchInput">
          <font>
             <Font name="Segoe UI" size="18.0" />
          </font>
       </TextField>
       <Button layoutX="671.0" layoutY="103.0" mnemonicParsing="false"
          style="-fx-background-color: #10b981; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 0, 0, 2, 2);"
-         text="Search" textFill="WHITE" onAction="#search">
+         text="Search" textFill="WHITE" onAction="#search" id="searchButton">
          <font>
             <Font name="Segoe UI" size="18.0" />
          </font>
@@ -70,7 +70,7 @@
             <Font name="Segoe UI Bold" size="30.0" />
          </font>
       </Label>
-      <ScrollPane layoutX="308.0" layoutY="179.0" prefHeight="400.0" prefWidth="450.0"
+      <ScrollPane id="showArea" layoutX="308.0" layoutY="179.0" prefHeight="400.0" prefWidth="450.0"
          fx:id="showArea">
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="400.0" prefWidth="450.0" />

@@ -19,6 +19,7 @@
             </font>
         </TextField>
         <Button layoutX="301.0" layoutY="451.0" mnemonicParsing="false" prefHeight="35.0"
+            id="updateStockButton"
             prefWidth="450.0"
             style="-fx-background-color: #10b981; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 0, 0, 2, 2);"
             text="Confirm" textFill="WHITE" onAction="#updateStock" fx:id="updateButton">

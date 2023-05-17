@@ -154,6 +154,7 @@ public class StockController implements Serializable {
                     stockCard.setPrefSize(425, 150);
                     stockCard.setPadding(new Insets(10, 20, 10, 20));
                     stockCard.setStyle("-fx-background-color:#ef4444");
+                    stockCard.setId("stockCard");
 
                     grid.add(stockCard, 1, i);
                 }
@@ -203,6 +204,7 @@ public class StockController implements Serializable {
                 deleteButton.setStyle("-fx-font-size:15; -fx-font-family: Segoe UI; -fx-background-color:#f97316");
                 deleteButton.setTextFill(Color.color(1, 1, 1));
                 deleteButton.setId(stocks[i].id);
+                deleteButton.getStyleClass().add("deleteButton");
                 deleteButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new deleteStock());
                 HBox manageSection = new HBox(editButton, deleteButton);
                 manageSection.setSpacing(10);
@@ -217,6 +219,7 @@ public class StockController implements Serializable {
                 stockCard.setPrefSize(425, 150);
                 stockCard.setPadding(new Insets(10, 20, 10, 20));
                 stockCard.setStyle("-fx-background-color:#ef4444");
+                stockCard.setId("stockCard");
 
                 grid.add(stockCard, 1, i);
             }
