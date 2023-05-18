@@ -37,7 +37,7 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label fx:id="lastPriceLabel" layoutX="22.0" layoutY="408.0" prefHeight="20.0" prefWidth="119.0" text="">
+            <Label id="lastPrice" fx:id="lastPriceLabel" layoutX="22.0" layoutY="408.0" prefHeight="20.0" prefWidth="119.0" text="">
                <font>
                   <Font size="14.0" />
                </font>

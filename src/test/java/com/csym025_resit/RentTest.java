@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.time.temporal.ChronoUnit;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
@@ -17,6 +18,7 @@ import org.testfx.robot.Motion;
 
 import com.csym025_resit.Model.Invoice;
 
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
@@ -143,6 +145,28 @@ class RentTest {
         robot.clickOn("#searchButton");
         Assertions.assertThat(robot.lookup("#showArea").queryAs(ScrollPane.class)).hasExactlyChildren(1,
                 "#invoiceCard");
+    }
+
+    @Test
+    @Order(6)
+    void TestPaymentCalculation() throws IOException, ClassNotFoundException {
+        Invoice[] invoices = openInvoiceSer();
+        String invoiceId = "#" + invoices[0].id;
+        int days = Math.toIntExact(ChronoUnit.DAYS.between(invoices[0].rentDate, invoices[0].returnDate)) + 1;
+
+        int totalPricePerday = 0;
+
+        for (int i = 0; i < invoices[0].cart.length; i++) {
+            int qty = invoices[0].cart[i].quantity;
+            totalPricePerday += invoices[0].cart[i].pricePerDay * qty;
+        }
+
+        int lastPrice = totalPricePerday * days;
+
+        FxRobot robot = new FxRobot();
+        robot.clickOn(invoiceId);
+        Assertions.assertThat(robot.lookup("#lastPrice").queryAs(Label.class).getText())
+                .isEqualTo("Last Price: " + lastPrice);
     }
 
 }
