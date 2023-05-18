@@ -34,21 +34,23 @@ import javafx.stage.Stage;
 
 public class StockController implements Serializable {
 
-    private Stage stage;
-    private Scene scene;
-    private Parent root;
-
     @FXML
     private ScrollPane showArea;
 
     @FXML
     private TextField searchInput;
 
+    private Stage stage;
+    private Scene scene;
+    private Parent root;
+
+    // Initiate function when open scene
     @FXML
     public void initialize() throws IOException, ClassNotFoundException {
         getAllStocks();
     }
 
+    // Switch to customer scene
     public void switchToCustomerScene(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("Customer.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -57,6 +59,7 @@ public class StockController implements Serializable {
         stage.show();
     }
 
+    // Switch to stock scene
     public void switchToStockScene(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("Stock.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -65,6 +68,7 @@ public class StockController implements Serializable {
         stage.show();
     }
 
+    // Switch to rent scene
     public void switchToRentScene(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("Rent.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -73,6 +77,7 @@ public class StockController implements Serializable {
         stage.show();
     }
 
+    // Switch to add stock scene
     public void switchToAddStockScene(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("AddStock.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -81,15 +86,19 @@ public class StockController implements Serializable {
         stage.show();
     }
 
+    // Switch to edit stock scene
     private class switchToEditStockScene implements EventHandler<Event> {
         @Override
         public void handle(Event evt) {
             try {
+                // Get id from button
                 String elementId = ((Button) evt.getSource()).getId();
 
+                // Store id in holder class
                 StockHolder holder = StockHolder.getInstance();
                 holder.setStock(elementId);
 
+                // Switch scene
                 root = FXMLLoader.load(getClass().getResource("EditStock.fxml"));
                 stage = (Stage) ((Node) evt.getSource()).getScene().getWindow();
 
@@ -102,9 +111,12 @@ public class StockController implements Serializable {
         }
     }
 
+    // Search function
     public void search() throws IOException, ClassNotFoundException, FileNotFoundException {
         String pathname = "src/main/java/com/csym025_resit/Serialization/Stock.ser";
         File f = new File(pathname);
+
+        // Check if file exist
         if (f.exists()) {
             Stock[] stocks = null;
             FileInputStream fileIn = new FileInputStream(pathname);
@@ -117,6 +129,7 @@ public class StockController implements Serializable {
             grid.setPadding(new Insets(5));
             grid.setVgap(10);
 
+            // Find stock from search input value
             for (int i = 0; i < stocks.length; i++) {
                 if (stocks[i].productName.contains(searchInput.getText())) {
                     Label productName = new Label(stocks[i].productName);
@@ -166,10 +179,13 @@ public class StockController implements Serializable {
         }
     }
 
+    // Get all stocks function
     public void getAllStocks() throws IOException, ClassNotFoundException, FileNotFoundException {
 
         String pathname = "src/main/java/com/csym025_resit/Serialization/Stock.ser";
         File f = new File(pathname);
+
+        // Check if file exist
         if (f.exists()) {
             Stock[] stocks = null;
             FileInputStream fileIn = new FileInputStream(pathname);
@@ -230,15 +246,19 @@ public class StockController implements Serializable {
         }
     }
 
+    // Delete stock by id
     private class deleteStock implements EventHandler<Event> {
         @Override
         public void handle(Event evt) {
             try {
 
+                // Get id from button
                 String elementId = ((Button) evt.getSource()).getId();
 
                 String pathname = "src/main/java/com/csym025_resit/Serialization/Stock.ser";
                 File f = new File(pathname);
+
+                // Check if file exist
                 if (f.exists()) {
                     Stock[] stocks = null;
                     FileInputStream fileIn = new FileInputStream(pathname);
@@ -249,6 +269,7 @@ public class StockController implements Serializable {
 
                     Stock[] newStocks = new Stock[stocks.length - 1];
 
+                    // Find matching id
                     for (int i = 0, k = 0; i < stocks.length; i++) {
                         if (!(stocks[i].id).equals(elementId)) {
                             newStocks[k] = stocks[i];

@@ -27,10 +27,6 @@ import javafx.stage.Stage;
 
 public class ViewInvoiceController {
 
-    private Stage stage;
-    private Scene scene;
-    private Parent root;
-
     @FXML
     private ScrollPane showArea;
 
@@ -39,23 +35,35 @@ public class ViewInvoiceController {
 
     @FXML
     private Label titleLabel;
+
     @FXML
     private Label customerNameLabel;
+
     @FXML
     private Label totalPricePerDayLabel;
+
     @FXML
     private Label lastPriceLabel;
+
     @FXML
     private Label rentDateLabel;
+
     @FXML
     private Label returnDateLabel;
+    
     @FXML
     private Label totalDayLabel;
 
+    private Stage stage;
+    private Scene scene;
+    private Parent root;
+
+    // Initiate function when open scene
     public void initialize() throws ClassNotFoundException {
         getInvoice();
     }
 
+    // Switch to customer scene
     public void switchToCustomerScene(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("Customer.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -64,6 +72,7 @@ public class ViewInvoiceController {
         stage.show();
     }
 
+    // Switch to stock scene
     public void switchToStockScene(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("Stock.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -72,6 +81,7 @@ public class ViewInvoiceController {
         stage.show();
     }
 
+    // Switch to rent scene
     public void switchToRentScene(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("Rent.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -80,13 +90,17 @@ public class ViewInvoiceController {
         stage.show();
     }
 
+    // Get invoice function
     public void getInvoice() {
         try {
             String pathname = "src/main/java/com/csym025_resit/Serialization/Invoice.ser";
             File f = new File(pathname);
 
+            // Get id from holder class
             InvoiceHolder holder = InvoiceHolder.getInstance();
             String invoiceId = holder.getInvoice();
+
+            // Check if file exist
             if (f.exists()) {
                 Invoice invoice = null;
                 Invoice[] invoices = null;
@@ -98,6 +112,7 @@ public class ViewInvoiceController {
 
                 int index = 0;
 
+                // Find matching data with id
                 for (int i = 0; i < invoices.length; i++) {
                     if ((invoices[i].id).equals(invoiceId)) {
                         invoice = invoices[i];
@@ -110,6 +125,7 @@ public class ViewInvoiceController {
                 grid.setPadding(new Insets(5));
                 grid.setVgap(10);
 
+                // Show data in cart arrays type
                 for (int j = 0; j < invoices[index].cart.length; j++) {
                     Label sort = new Label(j + 1 + "        ");
                     sort.setStyle("-fx-font-size:12; -fx-font-family: Segoe UI");
@@ -148,6 +164,7 @@ public class ViewInvoiceController {
                 showArea.setContent(grid);
                 showArea.setPannable(true);
 
+                // Create format pattern for date and time value
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm a");
 
                 titleLabel.setText("Invoice-" + invoice.id);

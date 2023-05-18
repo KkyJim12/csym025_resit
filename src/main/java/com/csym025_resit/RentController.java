@@ -47,15 +47,17 @@ public class RentController {
     @FXML
     private TextField searchInput;
 
+    private Stage stage;
+    private Scene scene;
+    private Parent root;
+
+    // Initiate function when open scene
     @FXML
     public void initialize() throws IOException, ClassNotFoundException {
         getAllInvoices();
     }
 
-    private Stage stage;
-    private Scene scene;
-    private Parent root;
-
+    // Switch to customer scene
     public void switchToCustomerScene(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("Customer.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -64,6 +66,7 @@ public class RentController {
         stage.show();
     }
 
+    // Switch to stock scene
     public void switchToStockScene(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("Stock.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -71,7 +74,8 @@ public class RentController {
         stage.setScene(scene);
         stage.show();
     }
-
+    
+    // Switch to rent scene
     public void switchToRentScene(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("Rent.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -80,6 +84,7 @@ public class RentController {
         stage.show();
     }
 
+    // Switch to add renting scene
     public void switchToAddRentingScene(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("AddRenting.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -88,10 +93,13 @@ public class RentController {
         stage.show();
     }
 
+    // Search function
     public void search() throws IOException, ClassNotFoundException, FileNotFoundException {
 
         String pathname = "src/main/java/com/csym025_resit/Serialization/Invoice.ser";
         File f = new File(pathname);
+
+        // Check if file exist
         if (f.exists()) {
             Invoice[] invoices = null;
             FileInputStream fileIn = new FileInputStream(pathname);
@@ -104,6 +112,7 @@ public class RentController {
             grid.setPadding(new Insets(5));
             grid.setVgap(10);
 
+            // Get data that contain search input value
             for (int i = 0; i < invoices.length; i++) {
                 if (invoices[i].customerName.contains(searchInput.getText())) {
                     Label invoiceName = new Label("Invoice-" + invoices[i].id);
@@ -142,6 +151,7 @@ public class RentController {
                     invoiceCard.getChildren().add(totalPrice);
                     invoiceCard.getChildren().add(rentDate);
 
+                    // Display different style if haven't return yet
                     if (invoices[i].returnDate != null) {
                         int days = Math
                                 .toIntExact(ChronoUnit.DAYS.between(invoices[i].rentDate, invoices[i].returnDate))
@@ -174,16 +184,20 @@ public class RentController {
                 }
             }
 
+            // Show in the show component
             showArea.setContent(grid);
             showArea.setPannable(true);
 
         }
     }
 
+    // Get all invoices function
     public void getAllInvoices() throws IOException, ClassNotFoundException, FileNotFoundException {
 
         String pathname = "src/main/java/com/csym025_resit/Serialization/Invoice.ser";
         File f = new File(pathname);
+
+        // Check if file exist
         if (f.exists()) {
             Invoice[] invoices = null;
             FileInputStream fileIn = new FileInputStream(pathname);
@@ -232,6 +246,7 @@ public class RentController {
                 invoiceCard.getChildren().add(totalPrice);
                 invoiceCard.getChildren().add(rentDate);
 
+                // Show different style if no return data yet
                 if (invoices[i].returnDate != null) {
                     int days = Math.toIntExact(ChronoUnit.DAYS.between(invoices[i].rentDate, invoices[i].returnDate))
                             + 1;
@@ -268,13 +283,13 @@ public class RentController {
         }
     }
 
+    // Accept return function
     private class acceptReturn implements EventHandler<Event> {
         @Override
         public void handle(Event evt) {
             try {
-
+                // Get id from holder class
                 String elementId = ((Button) evt.getSource()).getId();
-
                 InvoiceHolder holder = InvoiceHolder.getInstance();
                 holder.setInvoice(elementId);
 
@@ -325,6 +340,8 @@ public class RentController {
 
                                     stock.productName = stocks[index2].productName;
                                     stock.category = stocks[index2].category;
+
+                                    // Increase stock from borrow quantity
                                     stock.quantity = stocks[index2].quantity + invoices[i].cart[k].quantity;
                                     stock.pricePerDay = stocks[index2].pricePerDay;
 
@@ -367,15 +384,19 @@ public class RentController {
         }
     }
 
+    // Switch to view invoice scene
     private class viewInvoice implements EventHandler<Event> {
         @Override
         public void handle(Event evt) {
             try {
+                // Get id from button
                 String elementId = ((Button) evt.getSource()).getId();
 
+                // Store id in holder class
                 InvoiceHolder holder = InvoiceHolder.getInstance();
                 holder.setInvoice(elementId);
 
+                // Switch scene
                 root = FXMLLoader.load(getClass().getResource("ViewInvoice.fxml"));
                 stage = (Stage) ((Node) evt.getSource()).getScene().getWindow();
 

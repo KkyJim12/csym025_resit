@@ -25,26 +25,30 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class EditCustomerController {
-    private Stage stage;
-    private Scene scene;
-    private Parent root;
     @FXML
     private Button updateButton;
 
     @FXML
     private TextField fullNameInput;
+
     @FXML
     private TextField emailInput;
+
     @FXML
     private TextField phoneInput;
+
     @FXML
     private TextArea addressInput;
+
     @FXML
     private RadioButton genderMaleInput;
+
     @FXML
     private RadioButton genderFemaleInput;
+
     @FXML
     private Button backButton;
+
     @FXML
     private Label fullNameInputError;
 
@@ -57,10 +61,16 @@ public class EditCustomerController {
     @FXML
     private Label addressInputError;
 
+    private Stage stage;
+    private Scene scene;
+    private Parent root;
+
+    // Initiate function when open scene
     public void initialize() throws ClassNotFoundException {
         getCustomer();
     }
 
+    // Switch to customer scene
     public void switchToCustomerScene(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("Customer.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -69,6 +79,7 @@ public class EditCustomerController {
         stage.show();
     }
 
+    // Switch to stock scene
     public void switchToStockScene(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("Stock.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -77,6 +88,7 @@ public class EditCustomerController {
         stage.show();
     }
 
+    // Switch to rent scene
     public void switchToRentScene(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("Rent.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -85,6 +97,7 @@ public class EditCustomerController {
         stage.show();
     }
 
+    // Check if string contains number
     public static boolean isNumeric(String strNum) {
         if (strNum == null) {
             return false;
@@ -97,6 +110,7 @@ public class EditCustomerController {
         return true;
     }
 
+    // Reset validation errors
     public void resetValidate() throws IOException, ClassNotFoundException {
         fullNameInputError.setText("");
         emailInputError.setText("");
@@ -104,6 +118,7 @@ public class EditCustomerController {
         addressInputError.setText("");
     }
 
+    // Validate update customer function
     public Boolean validateUpdateCustomer() throws IOException, ClassNotFoundException {
 
         Boolean result = true;
@@ -136,20 +151,24 @@ public class EditCustomerController {
         return result;
     }
 
+    // Update customer function
     public void updateCustomer() throws IOException, ClassNotFoundException {
 
+        // Reset validation first
         resetValidate();
         if (validateUpdateCustomer() == false) {
             return;
         }
 
         String pathname = "src/main/java/com/csym025_resit/Serialization/Customer.ser";
+
+        // Get id from holder class
         CustomerHolder holder = CustomerHolder.getInstance();
         String customerId = holder.getCustomer();
 
-        System.out.println(customerId);
-
         File f = new File(pathname);
+
+        // Check if file exist
         if (f.exists()) {
             Customer customer = null;
             Customer[] customers = null;
@@ -161,6 +180,7 @@ public class EditCustomerController {
 
             int index = 0;
 
+            // Find matching id
             for (int i = 0; i < customers.length; i++) {
                 if ((customers[i].id).equals(customerId)) {
                     customer = customers[i];
@@ -180,6 +200,7 @@ public class EditCustomerController {
                 customer.gender = "Female";
             }
 
+            // Store new data
             Customer[] newCustomers = Arrays.copyOf(customers, customers.length);
             newCustomers[index] = customer;
 
@@ -190,14 +211,17 @@ public class EditCustomerController {
             fileOut.close();
         }
 
+        // Click back button to return back to main scene
         backButton.fire();
     }
 
+    // Get customer by id
     public void getCustomer() {
         try {
             String pathname = "src/main/java/com/csym025_resit/Serialization/Customer.ser";
             File f = new File(pathname);
 
+            // Get id from holder class
             CustomerHolder holder = CustomerHolder.getInstance();
             String customerId = holder.getCustomer();
             if (f.exists()) {

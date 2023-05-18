@@ -26,21 +26,28 @@ public class AddStockController {
 
     @FXML
     private TextField productNameInput;
+
     @FXML
     private TextField categoryInput;
+
     @FXML
     private TextField quantityInput;
+
     @FXML
     private TextField pricePerDayInput;
 
     @FXML
     private Label productNameInputError;
+
     @FXML
     private Label categoryInputError;
+
     @FXML
     private Label quantityInputError;
+
     @FXML
     private Label pricePerDayInputError;
+
     @FXML
     private Button backButton;
 
@@ -48,6 +55,7 @@ public class AddStockController {
     private Scene scene;
     private Parent root;
 
+    // Switch to customer scene
     public void switchToCustomerScene(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("Customer.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -56,6 +64,7 @@ public class AddStockController {
         stage.show();
     }
 
+    // Switch to stock scene
     public void switchToStockScene(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("Stock.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -64,6 +73,7 @@ public class AddStockController {
         stage.show();
     }
 
+    // Switch to rent scene
     public void switchToRentScene(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("Rent.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -72,6 +82,7 @@ public class AddStockController {
         stage.show();
     }
 
+    // Check if string contains number
     public static boolean isNumeric(String strNum) {
         if (strNum == null) {
             return false;
@@ -84,6 +95,7 @@ public class AddStockController {
         return true;
     }
 
+    // Reset validation errors
     public void resetValidate() throws IOException, ClassNotFoundException {
         productNameInputError.setText("");
         categoryInputError.setText("");
@@ -91,6 +103,7 @@ public class AddStockController {
         quantityInputError.setText("");
     }
 
+    // Validate add stock function
     public Boolean validateAddStock() throws IOException, ClassNotFoundException {
 
         Boolean result = true;
@@ -127,21 +140,26 @@ public class AddStockController {
         return result;
     }
 
+    // Add stock function
     public void addStock() throws IOException, ClassNotFoundException {
+        // Reset validation everytimes
         resetValidate();
         if (validateAddStock() == false) {
             return;
         }
 
+        // Assign stock class data to store
         Stock stock = new Stock();
-        String pathname = "src/main/java/com/csym025_resit/Serialization/Stock.ser";
         stock.id = UUID.randomUUID().toString();
         stock.productName = productNameInput.getText();
         stock.category = categoryInput.getText();
         stock.quantity = Integer.parseInt(quantityInput.getText());
         stock.pricePerDay = Integer.parseInt(pricePerDayInput.getText());
 
+        String pathname = "src/main/java/com/csym025_resit/Serialization/Stock.ser";
         File f = new File(pathname);
+
+        // Check if file exist
         if (f.exists()) {
             Stock[] stocks = null;
             FileInputStream fileIn = new FileInputStream(pathname);
@@ -158,6 +176,7 @@ public class AddStockController {
                 }
             }
 
+            // Store new product
             Stock[] newStocks = Arrays.copyOf(stocks, stocks.length + 1);
             newStocks[stocks.length] = stock;
 
@@ -167,6 +186,7 @@ public class AddStockController {
             out.close();
             fileOut.close();
         } else {
+            // If file not exist create new file and store a single data
             FileOutputStream fileOut = new FileOutputStream(pathname);
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
             out.writeObject(new Stock[] { stock });
@@ -174,6 +194,7 @@ public class AddStockController {
             fileOut.close();
         }
 
+        // Click on back button to return to main scene
         backButton.fire();
     }
 }

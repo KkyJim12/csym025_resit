@@ -66,11 +66,14 @@ public class AddCustomerController {
     private Scene scene;
     private Parent root;
 
+    // Initial function
     @FXML
     public void initialize() throws IOException, ClassNotFoundException {
+        // Set choicebox default
         genderMaleInput.setSelected(true);
     }
 
+    // Switch to customer scene
     public void switchToCustomerScene(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("Customer.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -79,6 +82,7 @@ public class AddCustomerController {
         stage.show();
     }
 
+    // Switch to stock scene
     public void switchToStockScene(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("Stock.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -87,6 +91,7 @@ public class AddCustomerController {
         stage.show();
     }
 
+    // Switch to rent scene
     public void switchToRentScene(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("Rent.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -95,6 +100,7 @@ public class AddCustomerController {
         stage.show();
     }
 
+    // Check if string char is number
     public static boolean isNumeric(String strNum) {
         if (strNum == null) {
             return false;
@@ -107,6 +113,7 @@ public class AddCustomerController {
         return true;
     }
 
+    // Reset all error labels
     public void resetValidate() throws IOException, ClassNotFoundException {
         fullNameInputError.setText("");
         emailInputError.setText("");
@@ -114,8 +121,10 @@ public class AddCustomerController {
         addressInputError.setText("");
     }
 
+    // Validate add customer function
     public Boolean validateAddCustomer() throws IOException, ClassNotFoundException {
 
+        // Init result to true
         Boolean result = true;
         // Check customer name
         if (fullNameInput.getText().isEmpty()) {
@@ -143,17 +152,21 @@ public class AddCustomerController {
             result = false;
         }
 
+        // Return result
         return result;
     }
 
+    // Add customer function
     public void addCustomer() throws IOException, ClassNotFoundException {
+        // Reset validation first every run this functions
         resetValidate();
+        // If validation exist stop continue
         if (validateAddCustomer() == false) {
             return;
         }
 
+        // Create customer from model class and assign value from inputs
         Customer customer = new Customer();
-        String pathname = "src/main/java/com/csym025_resit/Serialization/Customer.ser";
         customer.id = UUID.randomUUID().toString();
         customer.fullName = fullNameInput.getText();
         customer.email = emailInput.getText();
@@ -165,8 +178,11 @@ public class AddCustomerController {
             customer.gender = "Female";
         }
 
+        String pathname = "src/main/java/com/csym025_resit/Serialization/Customer.ser";
         File f = new File(pathname);
+        // Check if serialization file exist
         if (f.exists()) {
+            // Get data from serialization data
             Customer[] customers = null;
             FileInputStream fileIn = new FileInputStream(pathname);
             ObjectInputStream in = new ObjectInputStream(fileIn);
@@ -174,15 +190,18 @@ public class AddCustomerController {
             in.close();
             fileIn.close();
 
+            // Add new data to serialization
             Customer[] newCustomers = Arrays.copyOf(customers, customers.length + 1);
             newCustomers[customers.length] = customer;
 
+            // Store a new data
             FileOutputStream fileOut = new FileOutputStream(pathname);
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
             out.writeObject(newCustomers);
             out.close();
             fileOut.close();
         } else {
+            // If not create a new serialization file and store a new data
             FileOutputStream fileOut = new FileOutputStream(pathname);
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
             out.writeObject(new Customer[] { customer });
@@ -190,6 +209,7 @@ public class AddCustomerController {
             fileOut.close();
         }
 
+        // Click on back button to return back to main scene 
         backButton.fire();
     }
 }

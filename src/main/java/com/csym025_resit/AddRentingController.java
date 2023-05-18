@@ -38,38 +38,49 @@ public class AddRentingController {
     @FXML
     private Button customerLinkButton;
 
-    private Stage stage;
-    private Scene scene;
-    private Parent root;
-
     @FXML
     private ScrollPane showArea;
 
     @FXML
     private ChoiceBox<String> customerInput;
+
     @FXML
     private ChoiceBox<String> productInput;
+
     @FXML
     private TextField qtyInput;
 
     @FXML
     private Label customerInputError;
+
     @FXML
     private Label productInputError;
+
     @FXML
     private Label qtyInputError;
+
     @FXML
     private Label cartInputError;
+
     @FXML
     private Button backButton;
 
+    private Stage stage;
+    private Scene scene;
+    private Parent root;
+
+    // Initial function
     @FXML
     public void initialize() throws IOException, ClassNotFoundException {
+        // Reset cart function
         resetCart();
+        // Get all customers
         getAllCustomers();
+        // Get all stocks
         getAllStocks();
     }
-
+    
+    // Switch to customer scene
     public void switchToCustomerScene(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("Customer.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -78,6 +89,7 @@ public class AddRentingController {
         stage.show();
     }
 
+    // Switch to stock scene
     public void switchToStockScene(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("Stock.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -86,6 +98,7 @@ public class AddRentingController {
         stage.show();
     }
 
+    // Switch to rent scene
     public void switchToRentScene(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("Rent.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -94,11 +107,15 @@ public class AddRentingController {
         stage.show();
     }
 
+    // Get all customers and set choicebox selects
     public void getAllCustomers() throws IOException, ClassNotFoundException, FileNotFoundException {
-
         String pathname = "src/main/java/com/csym025_resit/Serialization/Customer.ser";
         File f = new File(pathname);
+
+        // Add choice box select
         customerInput.getItems().add("Please select customer");
+
+        // If file exist
         if (f.exists()) {
             Customer[] customers = null;
             FileInputStream fileIn = new FileInputStream(pathname);
@@ -111,20 +128,26 @@ public class AddRentingController {
             grid.setPadding(new Insets(5));
             grid.setVgap(10);
 
+            // Add choice box selects
             for (int i = 0; i < customers.length; i++) {
                 customerInput.getItems().add(customers[i].fullName);
                 customerInput.setValue(customers[i].fullName);
             }
-
         }
+
+        // Set default select
         customerInput.getSelectionModel().select(0);
     }
 
+    // Get all stocks and set choicebox selects
     public void getAllStocks() throws IOException, ClassNotFoundException, FileNotFoundException {
-
         String pathname = "src/main/java/com/csym025_resit/Serialization/Stock.ser";
         File f = new File(pathname);
+
+        // Set choice box label
         productInput.getItems().add("Please select product");
+
+        // If file exist
         if (f.exists()) {
             Stock[] stocks = null;
             FileInputStream fileIn = new FileInputStream(pathname);
@@ -137,13 +160,17 @@ public class AddRentingController {
             grid.setPadding(new Insets(5));
             grid.setVgap(10);
 
+            // Add choice box selects
             for (int i = 0; i < stocks.length; i++) {
                 productInput.getItems().add(stocks[i].productName);
             }
         }
+
+        // Set default select
         productInput.getSelectionModel().select(0);
     }
 
+    // Validate add to cart function
     public Boolean validateAddToCart() throws IOException, ClassNotFoundException {
 
         Boolean result = true;
@@ -260,13 +287,18 @@ public class AddRentingController {
 
     public void getCart() throws IOException, ClassNotFoundException, FileNotFoundException {
 
+        // Set up grid pane
         GridPane grid = new GridPane();
         grid.setPadding(new Insets(5));
         grid.setVgap(10);
 
         String pathname = "src/main/java/com/csym025_resit/Serialization/Cart.ser";
         File f = new File(pathname);
+
+        // If file exist
         if (f.exists()) {
+
+            // Read cart serialization data
             Cart[] cart = null;
             FileInputStream fileIn = new FileInputStream(pathname);
             ObjectInputStream in = new ObjectInputStream(fileIn);
@@ -274,6 +306,7 @@ public class AddRentingController {
             in.close();
             fileIn.close();
 
+            // Set product in cart
             for (int i = 0; i < cart.length; i++) {
                 Label productName = new Label(cart[i].productName);
                 productName.setStyle("-fx-font-size:32; -fx-font-weight:bold; -fx-font-family: Segoe UI");
@@ -288,8 +321,6 @@ public class AddRentingController {
                         "Total Price: " + Integer.toString(cart[i].pricePerDay * cart[i].quantity));
                 totalPrice.setStyle("-fx-font-size:15; -fx-font-family: Segoe UI");
                 totalPrice.setTextFill(Color.color(1, 1, 1));
-                // deleteButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new
-                // removeProductFromCart());
 
                 VBox productCard = new VBox();
                 productCard.getChildren().add(productName);
@@ -305,10 +336,12 @@ public class AddRentingController {
             }
         }
 
+        // Display items in cart
         showArea.setContent(grid);
         showArea.setPannable(true);
     }
 
+    // Check if String contain number
     public static boolean isNumeric(String strNum) {
         if (strNum == null) {
             return false;
@@ -321,6 +354,7 @@ public class AddRentingController {
         return true;
     }
 
+    // Reset validation errors
     public void resetValidate() throws IOException, ClassNotFoundException {
         customerInputError.setText("");
         productInputError.setText("");
@@ -328,6 +362,7 @@ public class AddRentingController {
         cartInputError.setText("");
     }
 
+    // Validate add invoice function
     public Boolean validateAddInvoice() throws IOException, ClassNotFoundException {
 
         Boolean result = true;
@@ -358,8 +393,10 @@ public class AddRentingController {
         return result;
     }
 
+    // Add invoice function
     public void addInvoice() throws IOException, ClassNotFoundException, FileNotFoundException {
 
+        // Reset validation error everytimes when click add invoice
         resetValidate();
         if (validateAddInvoice() == false) {
             return;
@@ -371,6 +408,8 @@ public class AddRentingController {
 
         String pathname1 = "src/main/java/com/csym025_resit/Serialization/Cart.ser";
         File f1 = new File(pathname1);
+
+        // Check if file exist
         if (f1.exists()) {
             FileInputStream fileIn1 = new FileInputStream(pathname1);
             ObjectInputStream in1 = new ObjectInputStream(fileIn1);
@@ -394,6 +433,7 @@ public class AddRentingController {
                     in2.close();
                     fileIn2.close();
 
+                    // Deduct quantity
                     for (int j = 0; j < stocks.length; j++) {
                         if ((stocks[j].productName).equals(cart[i].productName)) {
                             String pathname3 = "src/main/java/com/csym025_resit/Serialization/Stock.ser";
@@ -418,6 +458,7 @@ public class AddRentingController {
                 }
             }
 
+            // Create invoice
             Invoice invoice = new Invoice();
             String pathname4 = "src/main/java/com/csym025_resit/Serialization/Invoice.ser";
             invoice.id = UUID.randomUUID().toString();
@@ -453,6 +494,7 @@ public class AddRentingController {
                 fileOut4.close();
             }
 
+            // Click back button to return back to main scene
             backButton.fire();
         }
 

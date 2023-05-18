@@ -45,11 +45,13 @@ public class CustomerController {
     private Scene scene;
     private Parent root;
 
+    // Initiate function when open scene
     @FXML
     public void initialize() throws IOException, ClassNotFoundException {
         getAllCustomers();
     }
 
+    // Switch to customer scene
     public void switchToCustomerScene(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("Customer.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -58,6 +60,7 @@ public class CustomerController {
         stage.show();
     }
 
+    // Switch to stock scene
     public void switchToStockScene(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("Stock.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -66,6 +69,7 @@ public class CustomerController {
         stage.show();
     }
 
+    // Switch to rent scene
     public void switchToRentScene(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("Rent.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -74,6 +78,7 @@ public class CustomerController {
         stage.show();
     }
 
+    // Switch to add customer scene
     public void switchToAddCustomerScene(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("AddCustomer.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -82,12 +87,15 @@ public class CustomerController {
         stage.show();
     }
 
+    // Switch to edit customer scene
     private class switchToEditCustomerScreen implements EventHandler<Event> {
         @Override
         public void handle(Event evt) {
             try {
+                // Get id from button
                 String elementId = ((Button) evt.getSource()).getId();
 
+                // Store id in holder class
                 CustomerHolder holder = CustomerHolder.getInstance();
                 holder.setCustomer(elementId);
 
@@ -103,9 +111,12 @@ public class CustomerController {
         }
     }
 
+    // Search function
     public void search() throws IOException, ClassNotFoundException, FileNotFoundException {
         String pathname = "src/main/java/com/csym025_resit/Serialization/Customer.ser";
         File f = new File(pathname);
+
+        // Check if file exist
         if (f.exists()) {
             Customer[] customers = null;
             FileInputStream fileIn = new FileInputStream(pathname);
@@ -118,8 +129,8 @@ public class CustomerController {
             grid.setPadding(new Insets(5));
             grid.setVgap(10);
 
+            // Get only data that contain search value
             for (int i = 0; i < customers.length; i++) {
-
                 if (customers[i].fullName.contains(searchInput.getText())) {
                     Label fullName = new Label(customers[i].fullName);
                     fullName.setStyle("-fx-font-size:32; -fx-font-weight:bold; -fx-font-family: Segoe UI");
@@ -172,10 +183,13 @@ public class CustomerController {
         }
     }
 
+    // Get all customers
     public void getAllCustomers() throws IOException, ClassNotFoundException, FileNotFoundException {
 
         String pathname = "src/main/java/com/csym025_resit/Serialization/Customer.ser";
         File f = new File(pathname);
+
+        // Check if file exist
         if (f.exists()) {
             Customer[] customers = null;
             FileInputStream fileIn = new FileInputStream(pathname);
@@ -188,6 +202,7 @@ public class CustomerController {
             grid.setPadding(new Insets(5));
             grid.setVgap(10);
 
+            // Create card from looping data
             for (int i = 0; i < customers.length; i++) {
                 Label fullName = new Label(customers[i].fullName);
                 fullName.setStyle("-fx-font-size:32; -fx-font-weight:bold; -fx-font-family: Segoe UI");
@@ -234,21 +249,26 @@ public class CustomerController {
                 grid.add(customerCard, 1, i);
             }
 
+            // Show data to assign component
             showArea.setContent(grid);
             showArea.setPannable(true);
 
         }
     }
 
+    // Delete customer function
     private class deleteCustomer implements EventHandler<Event> {
         @Override
         public void handle(Event evt) {
             try {
 
+                // Get id from button
                 String elementId = ((Button) evt.getSource()).getId();
 
                 String pathname = "src/main/java/com/csym025_resit/Serialization/Customer.ser";
                 File f = new File(pathname);
+
+                // Check if file exist and delete that data
                 if (f.exists()) {
                     Customer[] customers = null;
                     FileInputStream fileIn = new FileInputStream(pathname);
@@ -272,6 +292,7 @@ public class CustomerController {
                     out.close();
                     fileOut.close();
 
+                    // Call get all customers function again
                     getAllCustomers();
                 }
             } catch (Exception e) {

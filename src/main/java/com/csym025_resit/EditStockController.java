@@ -23,36 +23,46 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class EditStockController {
-    private Stage stage;
-    private Scene scene;
-    private Parent root;
     @FXML
     private Button updateButton;
 
     @FXML
     private TextField productNameInput;
+
     @FXML
     private TextField categoryInput;
+
     @FXML
     private TextField quantityInput;
+
     @FXML
     private TextField pricePerDayInput;
+
     @FXML
     private Button backButton;
 
     @FXML
     private Label productNameInputError;
+
     @FXML
     private Label categoryInputError;
+
     @FXML
     private Label quantityInputError;
+
     @FXML
     private Label pricePerDayInputError;
 
+    private Stage stage;
+    private Scene scene;
+    private Parent root;
+
+    // Initiate function when open scene
     public void initialize() throws ClassNotFoundException {
         getStock();
     }
 
+    // Switch to customer scene
     public void switchToCustomerScene(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("Customer.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -61,6 +71,7 @@ public class EditStockController {
         stage.show();
     }
 
+    // Switch to stock scene
     public void switchToStockScene(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("Stock.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -69,6 +80,7 @@ public class EditStockController {
         stage.show();
     }
 
+    // Switch to rent scene
     public void switchToRentScene(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("Rent.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -77,6 +89,7 @@ public class EditStockController {
         stage.show();
     }
 
+    // Check if string is number
     public static boolean isNumeric(String strNum) {
         if (strNum == null) {
             return false;
@@ -89,6 +102,7 @@ public class EditStockController {
         return true;
     }
 
+    // Validate update stock function
     public Boolean validateUpdateStock() throws IOException, ClassNotFoundException {
 
         Boolean result = true;
@@ -125,6 +139,7 @@ public class EditStockController {
         return result;
     }
 
+    // Reset validation errors
     public void resetValidate() throws IOException, ClassNotFoundException {
         productNameInputError.setText("");
         categoryInputError.setText("");
@@ -132,18 +147,23 @@ public class EditStockController {
         quantityInputError.setText("");
     }
 
+    // Update stock
     public void updateStock() throws IOException, ClassNotFoundException {
 
+        // Reset validation errors first
         resetValidate();
         if (validateUpdateStock() == false) {
             return;
         }
 
         String pathname = "src/main/java/com/csym025_resit/Serialization/Stock.ser";
+        File f = new File(pathname);
+
+        // Get id from holder class
         StockHolder holder = StockHolder.getInstance();
         String stockId = holder.getStock();
 
-        File f = new File(pathname);
+        // Check if file exist
         if (f.exists()) {
             Stock stock = null;
             Stock[] stocks = null;
@@ -186,16 +206,21 @@ public class EditStockController {
             fileOut.close();
         }
 
+        // Click on back button to return back to main scene
         backButton.fire();
     }
 
+    // Get stock by id
     public void getStock() {
         try {
             String pathname = "src/main/java/com/csym025_resit/Serialization/Stock.ser";
             File f = new File(pathname);
 
+            // Get id from holder class
             StockHolder holder = StockHolder.getInstance();
             String stockId = holder.getStock();
+
+            // Check if file exist
             if (f.exists()) {
                 Stock stock = null;
                 Stock[] stocks = null;
@@ -204,7 +229,8 @@ public class EditStockController {
                 stocks = (Stock[]) in.readObject();
                 in.close();
                 fileIn.close();
-
+                
+                // Find matching data with id
                 for (int i = 0; i < stocks.length; i++) {
                     if ((stocks[i].id).equals(stockId)) {
                         stock = stocks[i];
@@ -212,6 +238,7 @@ public class EditStockController {
                     }
                 }
 
+                // Assign input value from data
                 productNameInput.setText(stock.productName);
                 categoryInput.setText(stock.category);
                 quantityInput.setText(Integer.toString(stock.quantity));
